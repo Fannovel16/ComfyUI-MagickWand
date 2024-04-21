@@ -10,7 +10,7 @@ Proper implementation of ImageMagick - the famous software suite for editing and
 * Windows 32-bit: https://imagemagick.org/archive/binaries/ImageMagick-7.1.1-30-Q16-HDRI-x86-dll.exe
 * Windows 64-bit: https://imagemagick.org/archive/binaries/ImageMagick-7.1.1-30-Q16-HDRI-x64-dll.exe
 
-For other CPU architectures, please download dynamic builds (ones have "file" in filename). A static or portable build won't work as it doesn't have necessary DLL files
+For other CPU architectures, please download dynamic builds (ones have "dll" in name). A static or portable build won't work as it doesn't have necessary DLL files
 #### Install ImageMagick on Debian/Ubuntu
 If you’re using Linux distributions based on Debian like Ubuntu, it can be easily installed using APT:
 ```sh

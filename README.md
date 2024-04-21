@@ -36,61 +36,67 @@ If your Python in not installed using MacPorts, you have to export MAGICK_HOME p
 export MAGICK_HOME=/opt/local
 ```
 ## Supported methods (58)
+### Effects
 * ImageMagick Blur
 * ImageMagick Canny
 * ImageMagick Charcoal
-* ImageMagick Chop
 * ImageMagick Clahe
 * ImageMagick Clamp
 * ImageMagick Combine
-* ImageMagick Concat
 * ImageMagick Contrast
-* ImageMagick Crop
-* ImageMagick Decipher
-* ImageMagick Deskew
-* ImageMagick Distort
 * ImageMagick Edge
 * ImageMagick Emboss
-* ImageMagick Encipher
 * ImageMagick Equalize
-* ImageMagick Evaluate
-* ImageMagick Extent
-* ImageMagick Function
-* ImageMagick Gamma
-* ImageMagick Implode
-* ImageMagick Kmeans
 * ImageMagick Kuwahara
-* ImageMagick Level
-* ImageMagick Levelize
-* ImageMagick Mode
-* ImageMagick Modulate
-* ImageMagick Morphology
 * ImageMagick Negate
 * ImageMagick Noise
 * ImageMagick Normalize
-* ImageMagick Polynomial
-* ImageMagick Posterize
-* ImageMagick Pseudo
-* ImageMagick Quantize
-* ImageMagick Resample
-* ImageMagick Resize
-* ImageMagick Roll
-* ImageMagick Sample
-* ImageMagick Scale
 * ImageMagick Shade
 * ImageMagick Shadow
 * ImageMagick Sharpen
-* ImageMagick Shave
 * ImageMagick Sketch
-* ImageMagick Smush
 * ImageMagick Solarize
-* ImageMagick Splice
 * ImageMagick Spread
-* ImageMagick Statistic
 * ImageMagick Swirl
-* ImageMagick Threshold
+* ImageMagick Transparentize
+* ImageMagick Wave
+### Resizing and cropping
+* ImageMagick Chop
+* ImageMagick Crop
+* ImageMagick Extent
+* ImageMagick Resample
+* ImageMagick Resize
+* ImageMagick Sample
+* ImageMagick Shave
+* ImageMagick Splice
 * ImageMagick Thumbnail
 * ImageMagick Transform
-* ImageMagick Transparentize
 * ImageMagick Vignette
-* ImageMagick Wave
+### Cipher
+* ImageMagick Decipher
+* ImageMagick Encipher
+### Transformation
+* ImageMagick Deskew
+* ImageMagick Mode
+* ImageMagick Modulate
+* ImageMagick Roll
+* ImageMagick Statistic
+### Distortion
+* ImageMagick Distort
+* ImageMagick Implode
+* ImageMagick Polynomial
+* ImageMagick Scale
+### Color Enhancement
+* ImageMagick Evaluate
+* ImageMagick Function
+* ImageMagick Gamma
+* ImageMagick Level
+* ImageMagick Levelize
+### Quantize
+* ImageMagick Kmeans
+* ImageMagick Posterize
+* ImageMagick Quantize
+### Morphology
+* ImageMagick Morphology
+### Threshold
+* ImageMagick Threshold

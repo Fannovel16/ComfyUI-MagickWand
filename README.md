@@ -5,23 +5,24 @@ Proper implementation of ImageMagick - the famous software suite for editing and
 * [Input image](./000002.jpg)
 ![](./example_image.png)
 ## Installation
-### Install ImageMagick on Windows
+### Install ImageMagick on your system
+#### Install ImageMagick on Windows
 * Windows 32-bit: https://imagemagick.org/archive/binaries/ImageMagick-7.1.1-30-Q16-HDRI-x86-dll.exe
 * Windows 64-bit: https://imagemagick.org/archive/binaries/ImageMagick-7.1.1-30-Q16-HDRI-x64-dll.exe
 
 For other CPU architectures, please download dynamic builds (ones have "file" in filename). A static or portable build won't work as it doesn't have necessary DLL files
-### Install ImageMagick on Debian/Ubuntu
+#### Install ImageMagick on Debian/Ubuntu
 If you’re using Linux distributions based on Debian like Ubuntu, it can be easily installed using APT:
 ```sh
 sudo apt-get install libmagickwand-dev
 ```
-### Install ImageMagick on Fedora/CentOS
+#### Install ImageMagick on Fedora/CentOS
 If you’re using Linux distributions based on Redhat like Fedora or CentOS, it can be installed using Yum:
 ```sh
 yum update
 yum install ImageMagick-devel
 ```
-### Install ImageMagick on Mac
+#### Install ImageMagick on Mac
 You need one of Homebrew or MacPorts to install ImageMagick.
 
 Homebrew:
@@ -35,6 +36,15 @@ sudo port install imagemagick
 If your Python in not installed using MacPorts, you have to export MAGICK_HOME path as well. Because Python that is not installed using MacPorts doesn’t look up /opt/local, the default path prefix of MacPorts packages.
 ```sh
 export MAGICK_HOME=/opt/local
+```
+### Install custom node suite
+There are two ways:
+1. Through [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager)
+2. Run the following command, assuming your terminal is already in ComfyUI folder:
+```
+cd custom_nodes
+git clone https://github.com/Fannovel16/ComfyUI-MagickWand
+pip install -r requirements.txt
 ```
 ## Supported methods (55)
 ### Effects

@@ -57,6 +57,8 @@ class {node_class_name}:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:

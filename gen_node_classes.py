@@ -3,7 +3,7 @@ import wand.image
 import inspect
 
 def gen_comfy_input_types(method_name, param_items):
-    img = wand.image.Image(filename='E:\\test_alpha.png')
+    img = wand.image.Image(filename='rose:')
     input_types = {"image": ("IMAGE",)}
     method_signature = inspect.signature(getattr(img, method_name)).parameters
     for param, param_type in param_items:
@@ -37,31 +37,11 @@ def gen_comfy_input_types(method_name, param_items):
             type_config = {"multiline": False}
         assert input_type, param_type
         input_types[param] = (input_type, type_config)
+    img.close()
     return {"required": input_types}
 
 with open("wand_methods.json", 'r') as f:
     wand_methods_dict = json.load(f)
-
-hwc3_code = \
-"""
-def HWC3(x):
-    assert x.dtype == np.uint8
-    if x.ndim == 2:
-        x = x[:, :, None]
-    assert x.ndim == 3
-    H, W, C = x.shape
-    assert C == 1 or C == 3 or C == 4
-    if C == 3:
-        return x
-    if C == 1:
-        return np.concatenate([x, x, x], axis=2)
-    if C == 4:
-        color = x[:, :, 0:3].astype(np.float32)
-        alpha = x[:, :, 3:4].astype(np.float32) / 255.0
-        y = color * alpha + 255.0 * (1.0 - alpha)
-        y = y.clip(0, 255).astype(np.uint8)
-        return y
-"""
 
 NODE_CLASS_TEMPLATE = \
 """
@@ -79,9 +59,9 @@ class {node_class_name}:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, '{img_method}')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, '{img_method}')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -91,7 +71,7 @@ with open("nodes.py", 'w') as f:
     f.write("import numpy as np\n")
     f.write("from wand.image import Image\n")
     f.write("import torch\n")
-    f.write(hwc3_code)
+    f.write("from .utils import HWC3\n")
     for method_name, param_dict in wand_methods_dict.items():
         node_class_name = method_name[0].upper()+method_name[1:]
         node_class_str = NODE_CLASS_TEMPLATE.format(

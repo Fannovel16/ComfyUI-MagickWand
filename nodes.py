@@ -1,24 +1,7 @@
 import numpy as np
 from wand.image import Image
 import torch
-
-def HWC3(x):
-    assert x.dtype == np.uint8
-    if x.ndim == 2:
-        x = x[:, :, None]
-    assert x.ndim == 3
-    H, W, C = x.shape
-    assert C == 1 or C == 3 or C == 4
-    if C == 3:
-        return x
-    if C == 1:
-        return np.concatenate([x, x, x], axis=2)
-    if C == 4:
-        color = x[:, :, 0:3].astype(np.float32)
-        alpha = x[:, :, 3:4].astype(np.float32) / 255.0
-        y = color * alpha + 255.0 * (1.0 - alpha)
-        y = y.clip(0, 255).astype(np.uint8)
-        return y
+from .utils import HWC3
 
 class Blur:
     @classmethod
@@ -34,9 +17,9 @@ class Blur:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'blur')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'blur')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -56,9 +39,9 @@ class Canny:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'canny')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'canny')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -78,9 +61,9 @@ class Charcoal:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'charcoal')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'charcoal')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -100,9 +83,9 @@ class Chop:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'chop')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'chop')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -122,9 +105,9 @@ class Clahe:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'clahe')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'clahe')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -144,9 +127,9 @@ class Clamp:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'clamp')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'clamp')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -166,9 +149,9 @@ class Combine:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'combine')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'combine')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -188,9 +171,9 @@ class Complex:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'complex')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'complex')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -210,9 +193,9 @@ class Concat:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'concat')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'concat')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -232,9 +215,9 @@ class Contrast:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'contrast')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'contrast')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -254,9 +237,9 @@ class Crop:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'crop')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'crop')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -276,9 +259,9 @@ class Decipher:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'decipher')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'decipher')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -298,9 +281,9 @@ class Deskew:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'deskew')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'deskew')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -320,9 +303,9 @@ class Distort:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'distort')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'distort')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -342,9 +325,9 @@ class Edge:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'edge')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'edge')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -364,9 +347,9 @@ class Emboss:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'emboss')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'emboss')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -386,9 +369,9 @@ class Encipher:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'encipher')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'encipher')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -408,9 +391,9 @@ class Equalize:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'equalize')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'equalize')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -430,9 +413,9 @@ class Evaluate:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'evaluate')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'evaluate')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -452,9 +435,9 @@ class Extent:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'extent')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'extent')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -474,9 +457,9 @@ class Function:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'function')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'function')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -496,9 +479,9 @@ class Gamma:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'gamma')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'gamma')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -518,9 +501,9 @@ class Implode:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'implode')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'implode')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -540,9 +523,9 @@ class Kmeans:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'kmeans')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'kmeans')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -562,9 +545,9 @@ class Kuwahara:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'kuwahara')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'kuwahara')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -584,9 +567,9 @@ class Level:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'level')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'level')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -606,9 +589,9 @@ class Levelize:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'levelize')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'levelize')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -628,9 +611,9 @@ class Mode:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'mode')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'mode')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -650,9 +633,9 @@ class Modulate:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'modulate')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'modulate')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -672,9 +655,9 @@ class Morphology:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'morphology')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'morphology')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -694,9 +677,9 @@ class Negate:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'negate')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'negate')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -716,9 +699,9 @@ class Noise:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'noise')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'noise')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -738,9 +721,9 @@ class Normalize:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'normalize')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'normalize')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -760,9 +743,9 @@ class Polynomial:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'polynomial')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'polynomial')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -782,9 +765,9 @@ class Posterize:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'posterize')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'posterize')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -804,9 +787,9 @@ class Pseudo:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'pseudo')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'pseudo')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -826,9 +809,9 @@ class Quantize:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'quantize')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'quantize')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -848,9 +831,9 @@ class Resample:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'resample')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'resample')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -870,9 +853,9 @@ class Resize:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'resize')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'resize')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -892,9 +875,9 @@ class Roll:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'roll')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'roll')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -914,9 +897,9 @@ class Sample:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'sample')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'sample')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -936,9 +919,9 @@ class Scale:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'scale')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'scale')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -958,9 +941,9 @@ class Shade:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'shade')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'shade')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -980,9 +963,9 @@ class Shadow:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'shadow')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'shadow')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1002,9 +985,9 @@ class Sharpen:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'sharpen')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'sharpen')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1024,9 +1007,9 @@ class Shave:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'shave')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'shave')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1046,9 +1029,9 @@ class Sketch:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'sketch')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'sketch')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1068,9 +1051,9 @@ class Smush:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'smush')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'smush')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1090,9 +1073,9 @@ class Solarize:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'solarize')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'solarize')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1112,9 +1095,9 @@ class Splice:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'splice')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'splice')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1134,9 +1117,9 @@ class Spread:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'spread')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'spread')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1156,9 +1139,9 @@ class Statistic:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'statistic')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'statistic')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1178,9 +1161,9 @@ class Swirl:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'swirl')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'swirl')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1200,9 +1183,9 @@ class Threshold:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'threshold')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'threshold')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1222,9 +1205,9 @@ class Thumbnail:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'thumbnail')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'thumbnail')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1244,9 +1227,9 @@ class Transform:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'transform')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'transform')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1266,9 +1249,9 @@ class Transparentize:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'transparentize')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'transparentize')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1288,9 +1271,9 @@ class Vignette:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'vignette')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'vignette')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)
@@ -1310,9 +1293,9 @@ class Wave:
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
         out_images = []
         for image in image_batch_np:
-            img_wand = Image.from_array(image)
-            getattr(img_wand, 'wave')(**kwargs)
-            out_images.append(HWC3(np.array(img_wand)))
+            with Image.from_array(image) as img_wand:
+                getattr(img_wand, 'wave')(**kwargs)
+                out_images.append(HWC3(np.array(img_wand)))
         out_images = np.stack(out_images)
         out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
         return (out_images,)

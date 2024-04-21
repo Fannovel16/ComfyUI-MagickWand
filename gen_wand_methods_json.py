@@ -30,7 +30,7 @@ METHOD_CONST_TYPE_MAP = dict(
     wave="PIXEL_INTERPOLATE_METHODS"
 )
 
-with Image(filename='E:\\test_alpha.png') as img:
+with Image(filename='rose:') as img:
     method_list = [func for func in dir(img) if '_' not in func and callable(getattr(img, func))]
     for method_name in method_list:
         method_doc = getattr(img, method_name).__doc__ \

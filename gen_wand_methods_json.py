@@ -9,7 +9,7 @@ all_types = []
 
 PARAM_CONST_TYPE_MAP = dict(
     channel="CHANNELS",
-    gravity="GRAVITY_TYPES",
+    gravity=None,
     colorspace="COLORSPACE_TYPES",
     colorspace_type="COLORSPACE_TYPES",
     kernel="KERNEL_INFO_TYPES",
@@ -22,7 +22,7 @@ PARAM_CONST_TYPE_MAP = dict(
 
 METHOD_CONST_TYPE_MAP = dict(
     clut="PIXEL_INTERPOLATE_METHODS",
-    disort="DISTORTION_METHODS",
+    distort="DISTORTION_METHODS",
     implode="PIXEL_INTERPOLATE_METHODS",
     morphology="MORPHOLOGY_METHODS",
     remap="DISTORTION_METHODS",
@@ -54,7 +54,8 @@ with Image(filename='rose:') as img:
 
         if ":returns:" in method_doc: continue
         if "file_object" in types: continue
-        elif ("wand.font.Font" in types) or ("wand.color.Color" in types) or ("wand.drawing.Drawing" in types) or ("Image" in types): continue #TODO: Support this
+        elif ("wand.font.Font" in types) or ("wand.color.Color" in types) or ("wand.drawing.Drawing" in types) or ("Image" in types) or (method_name == 'complex'): 
+            continue #TODO: Support this
         if method_name == "spread": types.append("PIXEL_INTERPOLATE_METHODS")
         elif method_name == "trim": params.remove("background_color")
         

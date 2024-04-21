@@ -60,7 +60,7 @@
         ],
         [
             "gravity",
-            "GRAVITY_TYPES"
+            null
         ]
     ],
     "clahe": [
@@ -95,16 +95,6 @@
         [
             "colorspace",
             "COLORSPACE_TYPES"
-        ]
-    ],
-    "complex": [
-        [
-            "operator",
-            "COMPLEX_OPERATORS"
-        ],
-        [
-            "snr",
-            "basestring"
         ]
     ],
     "concat": [
@@ -150,7 +140,7 @@
         ],
         [
             "gravity",
-            "GRAVITY_TYPES"
+            null
         ]
     ],
     "decipher": [
@@ -168,7 +158,7 @@
     "distort": [
         [
             "method",
-            "basestring"
+            "DISTORTION_METHODS"
         ],
         [
             "arguments",
@@ -244,7 +234,7 @@
         ],
         [
             "gravity",
-            "GRAVITY_TYPES"
+            null
         ]
     ],
     "function": [

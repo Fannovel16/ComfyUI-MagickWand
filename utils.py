@@ -1,4 +1,6 @@
 import numpy as np
+import re
+
 def HWC3(x):
     assert x.dtype == np.uint8
     if x.ndim == 2:
@@ -16,3 +18,8 @@ def HWC3(x):
         y = color * alpha + 255.0 * (1.0 - alpha)
         y = y.clip(0, 255).astype(np.uint8)
         return y
+
+def remove_comments(string):
+    pattern = r"#.*$"
+    regex = re.compile(pattern, re.MULTILINE)
+    return regex.sub("", string)

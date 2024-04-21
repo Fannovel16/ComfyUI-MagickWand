@@ -1,7 +1,8 @@
 # ComfyUI MagickWand
 Proper implementation of ImageMagick - the famous software suite for editing and manipulating digital images to ComfyUI using [wandpy](https://github.com/emcconville/wand)
 ## Example workflow
-[magickwand_playground.json](./magickwand_playground.json)
+* [magickwand_playground.json](./magickwand_playground.json)
+* [Input image](./000002.jpg)
 ![](./example_image.png)
 ## Installation
 ### Install ImageMagick on Windows
@@ -35,7 +36,7 @@ If your Python in not installed using MacPorts, you have to export MAGICK_HOME p
 ```sh
 export MAGICK_HOME=/opt/local
 ```
-## Supported methods (58)
+## Supported methods (55)
 ### Effects
 * ImageMagick Blur
 * ImageMagick Canny

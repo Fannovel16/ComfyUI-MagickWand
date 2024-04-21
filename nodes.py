@@ -15,6 +15,8 @@ class Blur:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -37,6 +39,8 @@ class Canny:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -59,6 +63,8 @@ class Charcoal:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -81,6 +87,8 @@ class Chop:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -103,6 +111,8 @@ class Clahe:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -125,6 +135,8 @@ class Clamp:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -147,6 +159,8 @@ class Combine:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -160,7 +174,7 @@ class Combine:
 class Complex:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'operator': (['undefined', 'add', 'conjugate', 'divide', 'magnitude', 'multiply', 'real_imaginary', 'subtract'], {'default': 'undefined'}), 'snr': ('STRING', {'multiline': False})}}
+        return {'required': {'image': ('IMAGE',), 'operator': (['undefined', 'add', 'conjugate', 'divide', 'magnitude', 'multiply', 'real_imaginary', 'subtract'], {'default': 'undefined'}), 'snr': ('STRING', {'multiline': True})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -169,6 +183,8 @@ class Complex:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -191,6 +207,8 @@ class Concat:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -213,6 +231,8 @@ class Contrast:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -235,6 +255,8 @@ class Crop:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -248,7 +270,7 @@ class Crop:
 class Decipher:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'passphrase': ('STRING', {'multiline': False})}}
+        return {'required': {'image': ('IMAGE',), 'passphrase': ('STRING', {'multiline': True})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -257,6 +279,8 @@ class Decipher:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -279,6 +303,8 @@ class Deskew:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -292,7 +318,7 @@ class Deskew:
 class Distort:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'method': ('STRING', {'multiline': False}), 'arguments': ('STRING', {'multiline': False}), 'best_fit': ('BOOLEAN', {'default': False}), 'filter': (['undefined', 'point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'jinc', 'sinc', 'sincfast', 'kaiser', 'welsh', 'parzen', 'bohman', 'bartlett', 'lagrange', 'lanczos', 'lanczossharp', 'lanczos2', 'lanczos2sharp', 'robidoux', 'robidouxsharp', 'cosine', 'spline', 'sentinel'], {'default': 'undefined'})}}
+        return {'required': {'image': ('IMAGE',), 'method': ('STRING', {'multiline': True}), 'arguments': ('STRING', {'multiline': True}), 'best_fit': ('BOOLEAN', {'default': False}), 'filter': (['undefined', 'point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'jinc', 'sinc', 'sincfast', 'kaiser', 'welsh', 'parzen', 'bohman', 'bartlett', 'lagrange', 'lanczos', 'lanczossharp', 'lanczos2', 'lanczos2sharp', 'robidoux', 'robidouxsharp', 'cosine', 'spline', 'sentinel'], {'default': 'undefined'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -301,6 +327,8 @@ class Distort:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -323,6 +351,8 @@ class Edge:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -345,6 +375,8 @@ class Emboss:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -358,7 +390,7 @@ class Emboss:
 class Encipher:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'passphrase': ('STRING', {'multiline': False})}}
+        return {'required': {'image': ('IMAGE',), 'passphrase': ('STRING', {'multiline': True})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -367,6 +399,8 @@ class Encipher:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -389,6 +423,8 @@ class Equalize:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -411,6 +447,8 @@ class Evaluate:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -433,6 +471,8 @@ class Extent:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -446,7 +486,7 @@ class Extent:
 class Function:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'function': (['undefined', 'arcsin', 'arctan', 'polynomial', 'sinusoid'], {'default': 'undefined'}), 'arguments': ('STRING', {'multiline': False}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'function': (['undefined', 'arcsin', 'arctan', 'polynomial', 'sinusoid'], {'default': 'undefined'}), 'arguments': ('STRING', {'multiline': True}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -455,6 +495,8 @@ class Function:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -477,6 +519,8 @@ class Gamma:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -499,6 +543,8 @@ class Implode:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -521,6 +567,8 @@ class Kmeans:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -543,6 +591,8 @@ class Kuwahara:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -565,6 +615,8 @@ class Level:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -587,6 +639,8 @@ class Levelize:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -609,6 +663,8 @@ class Mode:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -631,6 +687,8 @@ class Modulate:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -653,6 +711,8 @@ class Morphology:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -675,6 +735,8 @@ class Negate:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -697,6 +759,8 @@ class Noise:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -719,6 +783,8 @@ class Normalize:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -732,7 +798,7 @@ class Normalize:
 class Polynomial:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'arguments': ('STRING', {'multiline': False})}}
+        return {'required': {'image': ('IMAGE',), 'arguments': ('STRING', {'multiline': True})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -741,6 +807,8 @@ class Polynomial:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -763,6 +831,8 @@ class Posterize:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -776,7 +846,7 @@ class Posterize:
 class Pseudo:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 0, 'min': 0, 'max': 100}), 'height': ('INT', {'default': 0, 'min': 0, 'max': 100}), 'pseudo': ('STRING', {'multiline': False})}}
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 0, 'min': 0, 'max': 100}), 'height': ('INT', {'default': 0, 'min': 0, 'max': 100}), 'pseudo': ('STRING', {'multiline': True})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -785,6 +855,8 @@ class Pseudo:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -807,6 +879,8 @@ class Quantize:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -829,6 +903,8 @@ class Resample:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -851,6 +927,8 @@ class Resize:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -873,6 +951,8 @@ class Roll:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -895,6 +975,8 @@ class Sample:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -917,6 +999,8 @@ class Scale:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -939,6 +1023,8 @@ class Shade:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -961,6 +1047,8 @@ class Shadow:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -983,6 +1071,8 @@ class Sharpen:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1005,6 +1095,8 @@ class Shave:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1027,6 +1119,8 @@ class Sketch:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1049,6 +1143,8 @@ class Smush:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1071,6 +1167,8 @@ class Solarize:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1093,6 +1191,8 @@ class Splice:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1115,6 +1215,8 @@ class Spread:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1137,6 +1239,8 @@ class Statistic:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1159,6 +1263,8 @@ class Swirl:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1181,6 +1287,8 @@ class Threshold:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1203,6 +1311,8 @@ class Thumbnail:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1216,7 +1326,7 @@ class Thumbnail:
 class Transform:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'crop': ('STRING', {'multiline': False}), 'resize': ('STRING', {'multiline': False})}}
+        return {'required': {'image': ('IMAGE',), 'crop': ('STRING', {'multiline': True}), 'resize': ('STRING', {'multiline': True})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -1225,6 +1335,8 @@ class Transform:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1247,6 +1359,8 @@ class Transparentize:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1269,6 +1383,8 @@ class Vignette:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:
@@ -1291,6 +1407,8 @@ class Wave:
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in kwargs["arguments"].split(',') if x.strip()]
         out_images = []
         for image in image_batch_np:
             with Image.from_array(image) as img_wand:

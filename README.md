@@ -1,5 +1,5 @@
 # ComfyUI MagickWand
-Proper implementation of ImageMagick - the famous software suite for editing and manipulating digital images to ComfyUI
+Proper implementation of ImageMagick - the famous software suite for editing and manipulating digital images to ComfyUI using [wandpy](https://github.com/emcconville/wand)
 ## Example workflow
 [magickwand_playground.json](./magickwand_playground.json)
 ![](./example_image.png)
@@ -36,61 +36,61 @@ If your Python in not installed using MacPorts, you have to export MAGICK_HOME p
 export MAGICK_HOME=/opt/local
 ```
 ## Supported methods (58)
-ImageMagick Blur
-ImageMagick Canny
-ImageMagick Charcoal
-ImageMagick Chop
-ImageMagick Clahe
-ImageMagick Clamp
-ImageMagick Combine
-ImageMagick Concat
-ImageMagick Contrast
-ImageMagick Crop
-ImageMagick Decipher
-ImageMagick Deskew
-ImageMagick Distort
-ImageMagick Edge
-ImageMagick Emboss
-ImageMagick Encipher
-ImageMagick Equalize
-ImageMagick Evaluate
-ImageMagick Extent
-ImageMagick Function
-ImageMagick Gamma
-ImageMagick Implode
-ImageMagick Kmeans
-ImageMagick Kuwahara
-ImageMagick Level
-ImageMagick Levelize
-ImageMagick Mode
-ImageMagick Modulate
-ImageMagick Morphology
-ImageMagick Negate
-ImageMagick Noise
-ImageMagick Normalize
-ImageMagick Polynomial
-ImageMagick Posterize
-ImageMagick Pseudo
-ImageMagick Quantize
-ImageMagick Resample
-ImageMagick Resize
-ImageMagick Roll
-ImageMagick Sample
-ImageMagick Scale
-ImageMagick Shade
-ImageMagick Shadow
-ImageMagick Sharpen
-ImageMagick Shave
-ImageMagick Sketch
-ImageMagick Smush
-ImageMagick Solarize
-ImageMagick Splice
-ImageMagick Spread
-ImageMagick Statistic
-ImageMagick Swirl
-ImageMagick Threshold
-ImageMagick Thumbnail
-ImageMagick Transform
-ImageMagick Transparentize
-ImageMagick Vignette
-ImageMagick Wave
+* ImageMagick Blur
+* ImageMagick Canny
+* ImageMagick Charcoal
+* ImageMagick Chop
+* ImageMagick Clahe
+* ImageMagick Clamp
+* ImageMagick Combine
+* ImageMagick Concat
+* ImageMagick Contrast
+* ImageMagick Crop
+* ImageMagick Decipher
+* ImageMagick Deskew
+* ImageMagick Distort
+* ImageMagick Edge
+* ImageMagick Emboss
+* ImageMagick Encipher
+* ImageMagick Equalize
+* ImageMagick Evaluate
+* ImageMagick Extent
+* ImageMagick Function
+* ImageMagick Gamma
+* ImageMagick Implode
+* ImageMagick Kmeans
+* ImageMagick Kuwahara
+* ImageMagick Level
+* ImageMagick Levelize
+* ImageMagick Mode
+* ImageMagick Modulate
+* ImageMagick Morphology
+* ImageMagick Negate
+* ImageMagick Noise
+* ImageMagick Normalize
+* ImageMagick Polynomial
+* ImageMagick Posterize
+* ImageMagick Pseudo
+* ImageMagick Quantize
+* ImageMagick Resample
+* ImageMagick Resize
+* ImageMagick Roll
+* ImageMagick Sample
+* ImageMagick Scale
+* ImageMagick Shade
+* ImageMagick Shadow
+* ImageMagick Sharpen
+* ImageMagick Shave
+* ImageMagick Sketch
+* ImageMagick Smush
+* ImageMagick Solarize
+* ImageMagick Splice
+* ImageMagick Spread
+* ImageMagick Statistic
+* ImageMagick Swirl
+* ImageMagick Threshold
+* ImageMagick Thumbnail
+* ImageMagick Transform
+* ImageMagick Transparentize
+* ImageMagick Vignette
+* ImageMagick Wave

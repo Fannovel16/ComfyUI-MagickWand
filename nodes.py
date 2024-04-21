@@ -178,31 +178,6 @@ class Combine:
         return (out_images,)
 
 
-class Complex:
-    @classmethod
-    def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'operator': (['undefined', 'add', 'conjugate', 'divide', 'magnitude', 'multiply', 'real_imaginary', 'subtract'], {'default': 'add'}), 'snr': ('STRING', {'multiline': True})}}
-
-    RETURN_TYPES = ("IMAGE",)
-    FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'complex').__doc__
-
-    CATEGORY = "MagickWand"
-
-    def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'complex')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
-
-
 class Concat:
     @classmethod
     def INPUT_TYPES(s):
@@ -581,7 +556,7 @@ class Implode:
 class Kmeans:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'number_colors': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'max_iterations': ('INT', {'default': 100, 'min': 0, 'max': 1024}), 'tolerance': ('FLOAT', {'default': 0.01, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+        return {'required': {'image': ('IMAGE',), 'number_colors': ('INT', {'default': 16, 'min': 1, 'max': 1024}), 'max_iterations': ('INT', {'default': 100, 'min': 0, 'max': 1024}), 'tolerance': ('FLOAT', {'default': 0.01, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -906,7 +881,7 @@ class Pseudo:
 class Quantize:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'number_colors': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'colorspace_type': (['undefined', 'cmy', 'cmyk', 'gray', 'hcl', 'hclp', 'hsb', 'hsi', 'hsl', 'hsv', 'hwb', 'lab', 'lch', 'lchab', 'lchuv', 'log', 'lms', 'luv', 'ohta', 'rec601ycbcr', 'rec709ycbcr', 'rgb', 'scrgb', 'srgb', 'transparent', 'xyy', 'xyz', 'ycbcr', 'ycc', 'ydbdr', 'yiq', 'ypbpr', 'yuv'], {'default': 'cmy'}), 'treedepth': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'dither': (['undefined', 'no', 'riemersma', 'floyd_steinberg'], {'default': 'no'}), 'measure_error': ('BOOLEAN', {'default': False})}}
+        return {'required': {'image': ('IMAGE',), 'number_colors': ('INT', {'default': 16, 'min': 1, 'max': 1024}), 'colorspace_type': (['undefined', 'cmy', 'cmyk', 'gray', 'hcl', 'hclp', 'hsb', 'hsi', 'hsl', 'hsv', 'hwb', 'lab', 'lch', 'lchab', 'lchuv', 'log', 'lms', 'luv', 'ohta', 'rec601ycbcr', 'rec709ycbcr', 'rgb', 'scrgb', 'srgb', 'transparent', 'xyy', 'xyz', 'ycbcr', 'ycc', 'ydbdr', 'yiq', 'ypbpr', 'yuv'], {'default': 'cmy'}), 'treedepth': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'dither': (['undefined', 'no', 'riemersma', 'floyd_steinberg'], {'default': 'no'}), 'measure_error': ('BOOLEAN', {'default': False})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
@@ -1485,7 +1460,6 @@ NODE_CLASS_MAPPINGS = {
     "ImageMagick Clahe": Clahe,
     "ImageMagick Clamp": Clamp,
     "ImageMagick Combine": Combine,
-    "ImageMagick Complex": Complex,
     "ImageMagick Concat": Concat,
     "ImageMagick Contrast": Contrast,
     "ImageMagick Crop": Crop,

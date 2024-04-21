@@ -1,5 +1,5 @@
 # ComfyUI MagickWand
-Proper implementation of ImageMagick - the famous software suite editing and manipulating digital images to ComfyUI
+Proper implementation of ImageMagick - the famous software suite for editing and manipulating digital images to ComfyUI
 ## Example workflow
 [magickwand_playground.json](./magickwand_playground.json)
 ![](./example_image.png)

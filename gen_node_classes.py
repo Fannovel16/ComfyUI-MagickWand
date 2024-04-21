@@ -34,7 +34,7 @@ def gen_comfy_input_types(method_name, param_items):
 
         elif (param_type == "basestring") or (param_type == "floats"): 
             input_type = "STRING"
-            type_config = {"multiline": False}
+            type_config = {"multiline": True}
         assert input_type, param_type
         input_types[param] = (input_type, type_config)
     img.close()

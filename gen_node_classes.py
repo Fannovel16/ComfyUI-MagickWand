@@ -63,6 +63,8 @@ def gen_comfy_input_types(method_name, param_items):
 
 with open("wand_methods.json", 'r') as f:
     wand_methods_dict = json.load(f)
+with open("method_category.json", 'r') as f:
+    method_category_dict = json.load(f)
 
 NODE_CLASS_TEMPLATE = \
 """
@@ -75,7 +77,7 @@ class {node_class_name}:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, '{img_method}').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "{category}"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -91,6 +93,8 @@ class {node_class_name}:
         return (out_images,)
 """
 
+blacklist = ['pseudo', 'smash', 'concat', 'smush']
+
 with open("nodes.py", 'w') as f:
     f.write("import numpy as np\n")
     f.write("from wand.image import Image\n")
@@ -98,16 +102,19 @@ with open("nodes.py", 'w') as f:
     f.write("from .utils import HWC3, remove_comments\n")
     img_wand = wand.image.Image(filename='rose:')
     for method_name, param_dict in wand_methods_dict.items():
+        if method_name in blacklist: continue
         node_class_name = method_name[0].upper()+method_name[1:]
         node_class_str = NODE_CLASS_TEMPLATE.format(
             node_class_name=node_class_name,
             comfy_input_types=gen_comfy_input_types(method_name, param_dict),
-            img_method=method_name
+            img_method=method_name,
+            category=f"MagickWand/{method_category_dict[method_name]}" if method_name in method_category_dict else "MagickWand"
         )
         f.write(node_class_str + '\n')
 
     f.write("NODE_CLASS_MAPPINGS = {\n")
     for method_name in wand_methods_dict:
+        if method_name in blacklist: continue
         node_class_name = method_name[0].upper()+method_name[1:]
         f.write(' ' * 4)
         f.write(f'"ImageMagick {node_class_name}": {node_class_name},')

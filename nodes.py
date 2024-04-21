@@ -12,7 +12,7 @@ class Blur:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'blur').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -37,7 +37,7 @@ class Canny:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'canny').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -62,7 +62,7 @@ class Charcoal:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'charcoal').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -87,7 +87,7 @@ class Chop:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'chop').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -112,7 +112,7 @@ class Clahe:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'clahe').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -137,7 +137,7 @@ class Clamp:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'clamp').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -162,7 +162,7 @@ class Combine:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'combine').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -178,31 +178,6 @@ class Combine:
         return (out_images,)
 
 
-class Concat:
-    @classmethod
-    def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'stacked': ('BOOLEAN', {'default': False})}}
-
-    RETURN_TYPES = ("IMAGE",)
-    FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'concat').__doc__
-
-    CATEGORY = "MagickWand"
-
-    def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'concat')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
-
-
 class Contrast:
     @classmethod
     def INPUT_TYPES(s):
@@ -212,7 +187,7 @@ class Contrast:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'contrast').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -237,7 +212,7 @@ class Crop:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'crop').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -262,7 +237,7 @@ class Decipher:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'decipher').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Cipher"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -287,7 +262,7 @@ class Deskew:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'deskew').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -312,7 +287,7 @@ class Distort:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'distort').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Distortion"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -337,7 +312,7 @@ class Edge:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'edge').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -362,7 +337,7 @@ class Emboss:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'emboss').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -387,7 +362,7 @@ class Encipher:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'encipher').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Cipher"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -412,7 +387,7 @@ class Equalize:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'equalize').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -437,7 +412,7 @@ class Evaluate:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'evaluate').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -462,7 +437,7 @@ class Extent:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'extent').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -487,7 +462,7 @@ class Function:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'function').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -512,7 +487,7 @@ class Gamma:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'gamma').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -537,7 +512,7 @@ class Implode:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'implode').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Distortion"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -562,7 +537,7 @@ class Kmeans:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'kmeans').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -587,7 +562,7 @@ class Kuwahara:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'kuwahara').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -612,7 +587,7 @@ class Level:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'level').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -637,7 +612,7 @@ class Levelize:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'levelize').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -662,7 +637,7 @@ class Mode:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'mode').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -687,7 +662,7 @@ class Modulate:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'modulate').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -712,7 +687,7 @@ class Morphology:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'morphology').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Morphology"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -737,7 +712,7 @@ class Negate:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'negate').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -762,7 +737,7 @@ class Noise:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'noise').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -787,7 +762,7 @@ class Normalize:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'normalize').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -812,7 +787,7 @@ class Polynomial:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'polynomial').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Distortion"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -837,7 +812,7 @@ class Posterize:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'posterize').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -853,31 +828,6 @@ class Posterize:
         return (out_images,)
 
 
-class Pseudo:
-    @classmethod
-    def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'pseudo': ('STRING', {'multiline': True})}}
-
-    RETURN_TYPES = ("IMAGE",)
-    FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'pseudo').__doc__
-
-    CATEGORY = "MagickWand"
-
-    def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'pseudo')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
-
-
 class Quantize:
     @classmethod
     def INPUT_TYPES(s):
@@ -887,7 +837,7 @@ class Quantize:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'quantize').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -912,7 +862,7 @@ class Resample:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'resample').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -937,7 +887,7 @@ class Resize:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'resize').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -962,7 +912,7 @@ class Roll:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'roll').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -987,7 +937,7 @@ class Sample:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'sample').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1012,7 +962,7 @@ class Scale:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'scale').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Distortion"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1037,7 +987,7 @@ class Shade:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'shade').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1062,7 +1012,7 @@ class Shadow:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'shadow').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1087,7 +1037,7 @@ class Sharpen:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'sharpen').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1112,7 +1062,7 @@ class Shave:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'shave').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1137,7 +1087,7 @@ class Sketch:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'sketch').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1153,31 +1103,6 @@ class Sketch:
         return (out_images,)
 
 
-class Smush:
-    @classmethod
-    def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'stacked': ('BOOLEAN', {'default': False}), 'offset': ('INT', {'default': 0, 'min': 0, 'max': 1024})}}
-
-    RETURN_TYPES = ("IMAGE",)
-    FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'smush').__doc__
-
-    CATEGORY = "MagickWand"
-
-    def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'smush')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
-
-
 class Solarize:
     @classmethod
     def INPUT_TYPES(s):
@@ -1187,7 +1112,7 @@ class Solarize:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'solarize').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1212,7 +1137,7 @@ class Splice:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'splice').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1237,7 +1162,7 @@ class Spread:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'spread').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1262,7 +1187,7 @@ class Statistic:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'statistic').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1287,7 +1212,7 @@ class Swirl:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'swirl').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1312,7 +1237,7 @@ class Threshold:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'threshold').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Threshold"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1337,7 +1262,7 @@ class Thumbnail:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'thumbnail').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1362,7 +1287,7 @@ class Transform:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'transform').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1387,7 +1312,7 @@ class Transparentize:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'transparentize').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1412,7 +1337,7 @@ class Vignette:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'vignette').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1437,7 +1362,7 @@ class Wave:
     FUNCTION = "execute"
     DESCRIPTION = getattr(Image, 'wave').__doc__
 
-    CATEGORY = "MagickWand"
+    CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
         image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
@@ -1460,7 +1385,6 @@ NODE_CLASS_MAPPINGS = {
     "ImageMagick Clahe": Clahe,
     "ImageMagick Clamp": Clamp,
     "ImageMagick Combine": Combine,
-    "ImageMagick Concat": Concat,
     "ImageMagick Contrast": Contrast,
     "ImageMagick Crop": Crop,
     "ImageMagick Decipher": Decipher,
@@ -1487,7 +1411,6 @@ NODE_CLASS_MAPPINGS = {
     "ImageMagick Normalize": Normalize,
     "ImageMagick Polynomial": Polynomial,
     "ImageMagick Posterize": Posterize,
-    "ImageMagick Pseudo": Pseudo,
     "ImageMagick Quantize": Quantize,
     "ImageMagick Resample": Resample,
     "ImageMagick Resize": Resize,
@@ -1499,7 +1422,6 @@ NODE_CLASS_MAPPINGS = {
     "ImageMagick Sharpen": Sharpen,
     "ImageMagick Shave": Shave,
     "ImageMagick Sketch": Sketch,
-    "ImageMagick Smush": Smush,
     "ImageMagick Solarize": Solarize,
     "ImageMagick Splice": Splice,
     "ImageMagick Spread": Spread,

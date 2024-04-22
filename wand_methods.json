@@ -1,4 +1,71 @@
 {
+    "adaptive_blur": [
+        [
+            "radius",
+            "numbers.Real"
+        ],
+        [
+            "sigma",
+            "numbers.Real"
+        ],
+        [
+            "channel",
+            "CHANNELS"
+        ]
+    ],
+    "adaptive_resize": [
+        [
+            "columns",
+            "numbers.Integral"
+        ],
+        [
+            "rows",
+            "numbers.Integral"
+        ]
+    ],
+    "adaptive_sharpen": [
+        [
+            "radius",
+            "numbers.Real"
+        ],
+        [
+            "sigma",
+            "numbers.Real"
+        ],
+        [
+            "channel",
+            "CHANNELS"
+        ]
+    ],
+    "adaptive_threshold": [
+        [
+            "width",
+            "numbers.Integral"
+        ],
+        [
+            "height",
+            "numbers.Integral"
+        ],
+        [
+            "offset",
+            "numbers.Real"
+        ]
+    ],
+    "auto_gamma": [],
+    "auto_level": [],
+    "auto_orient": [],
+    "auto_threshold": [
+        [
+            "method",
+            "AUTO_THRESHOLD_METHODS"
+        ]
+    ],
+    "blue_shift": [
+        [
+            "factor",
+            "numbers.Real"
+        ]
+    ],
     "blur": [
         [
             "radius",
@@ -11,6 +78,16 @@
         [
             "channel",
             "CHANNELS"
+        ]
+    ],
+    "brightness_contrast": [
+        [
+            "brightness",
+            "numbers.Real"
+        ],
+        [
+            "contrast",
+            "numbers.Real"
         ]
     ],
     "canny": [
@@ -87,6 +164,19 @@
             "CHANNELS"
         ]
     ],
+    "coalesce": [],
+    "color_decision_list": [
+        [
+            "ccc",
+            "basestring"
+        ]
+    ],
+    "color_matrix": [
+        [
+            "matrix",
+            "floats"
+        ]
+    ],
     "combine": [
         [
             "channel",
@@ -107,6 +197,20 @@
         [
             "sharpen",
             "bool"
+        ]
+    ],
+    "contrast_stretch": [
+        [
+            "black_point",
+            "numbers.Real"
+        ],
+        [
+            "white_point",
+            "numbers.Real"
+        ],
+        [
+            "channel",
+            "CHANNELS"
         ]
     ],
     "crop": [
@@ -143,18 +247,19 @@
             null
         ]
     ],
+    "cycle_color_map": [
+        [
+            "offset",
+            "numbers.Integral"
+        ]
+    ],
     "decipher": [
         [
             "passphrase",
             "basestring"
         ]
     ],
-    "deskew": [
-        [
-            "threshold",
-            "numbers.Real"
-        ]
-    ],
+    "despeckle": [],
     "distort": [
         [
             "method",
@@ -195,6 +300,7 @@
             "basestring"
         ]
     ],
+    "enhance": [],
     "equalize": [
         [
             "channel",
@@ -237,6 +343,14 @@
             null
         ]
     ],
+    "flip": [],
+    "flop": [],
+    "forward_fourier_transform": [
+        [
+            "magnitude",
+            "bool"
+        ]
+    ],
     "function": [
         [
             "function",
@@ -259,6 +373,34 @@
         [
             "channel",
             "CHANNELS"
+        ]
+    ],
+    "gaussian_blur": [
+        [
+            "radius",
+            "numbers.Real"
+        ],
+        [
+            "sigma",
+            "numbers.Real"
+        ],
+        [
+            "channel",
+            "CHANNELS"
+        ]
+    ],
+    "hough_lines": [
+        [
+            "width",
+            "numbers.Integral"
+        ],
+        [
+            "height",
+            "numbers.Integral"
+        ],
+        [
+            "threshold",
+            "numbers.Integral"
         ]
     ],
     "implode": [
@@ -331,6 +473,65 @@
             "CHANNELS"
         ]
     ],
+    "linear_stretch": [
+        [
+            "black_point",
+            "numbers.Real"
+        ],
+        [
+            "white_point",
+            "numbers.Real"
+        ]
+    ],
+    "liquid_rescale": [
+        [
+            "width",
+            "numbers.Integral"
+        ],
+        [
+            "height",
+            "numbers.Integral"
+        ],
+        [
+            "delta_x",
+            "numbers.Real"
+        ],
+        [
+            "rigidity",
+            "numbers.Real"
+        ]
+    ],
+    "local_contrast": [
+        [
+            "radius",
+            "numbers.Real"
+        ],
+        [
+            "strength",
+            "numbers.Real"
+        ]
+    ],
+    "magnify": [],
+    "mean_shift": [
+        [
+            "width",
+            "numbers.Integral"
+        ],
+        [
+            "height",
+            "numbers.Integral"
+        ],
+        [
+            "color_distance",
+            "numbers.Real"
+        ]
+    ],
+    "merge_layers": [
+        [
+            "method",
+            "IMAGE_LAYER_METHOD"
+        ]
+    ],
     "mode": [
         [
             "width",
@@ -373,6 +574,20 @@
             "CHANNELS"
         ]
     ],
+    "motion_blur": [
+        [
+            "radius",
+            "numbers.Real"
+        ],
+        [
+            "sigma",
+            "numbers.Real"
+        ],
+        [
+            "angle",
+            "numbers.Real"
+        ]
+    ],
     "negate": [
         [
             "grayscale",
@@ -403,6 +618,26 @@
             "CHANNELS"
         ]
     ],
+    "oil_paint": [
+        [
+            "radius",
+            "numbers.Real"
+        ],
+        [
+            "sigma",
+            "numbers.Real"
+        ]
+    ],
+    "ordered_dither": [
+        [
+            "threshold_map",
+            "basestring"
+        ],
+        [
+            "channel",
+            "CHANNELS"
+        ]
+    ],
     "polynomial": [
         [
             "arguments",
@@ -417,20 +652,6 @@
         [
             "dither",
             "DITHER_METHODS"
-        ]
-    ],
-    "pseudo": [
-        [
-            "width",
-            "numbers.Integral"
-        ],
-        [
-            "height",
-            "numbers.Integral"
-        ],
-        [
-            "pseudo",
-            "basestring"
         ]
     ],
     "quantize": [
@@ -453,6 +674,38 @@
         [
             "measure_error",
             "bool"
+        ]
+    ],
+    "random_threshold": [
+        [
+            "low",
+            "numbers.Real"
+        ],
+        [
+            "high",
+            "numbers.Real"
+        ],
+        [
+            "channel",
+            "CHANNELS"
+        ]
+    ],
+    "range_threshold": [
+        [
+            "low_black",
+            "numbers.Real"
+        ],
+        [
+            "low_white",
+            "numbers.Real"
+        ],
+        [
+            "high_white",
+            "numbers.Real"
+        ],
+        [
+            "high_black",
+            "numbers.Real"
         ]
     ],
     "resample": [
@@ -501,6 +754,16 @@
             "numbers.Integral"
         ]
     ],
+    "rotational_blur": [
+        [
+            "angle",
+            "numbers.Real"
+        ],
+        [
+            "channel",
+            "CHANNELS"
+        ]
+    ],
     "sample": [
         [
             "width",
@@ -519,6 +782,30 @@
         [
             "rows",
             "numbers.Integral"
+        ]
+    ],
+    "selective_blur": [
+        [
+            "radius",
+            "numbers.Real"
+        ],
+        [
+            "sigma",
+            "numbers.Real"
+        ],
+        [
+            "threshold",
+            "numbers.Real"
+        ],
+        [
+            "channel",
+            "CHANNELS"
+        ]
+    ],
+    "sepia_tone": [
+        [
+            "threshold",
+            "numbers.Real"
         ]
     ],
     "shade": [
@@ -575,6 +862,24 @@
         [
             "rows",
             "numbers.Integral"
+        ]
+    ],
+    "sigmoidal_contrast": [
+        [
+            "sharpen",
+            "bool"
+        ],
+        [
+            "strength",
+            "numbers.Real"
+        ],
+        [
+            "midpoint",
+            "numbers.Real"
+        ],
+        [
+            "channel",
+            "CHANNELS"
         ]
     ],
     "sketch": [
@@ -697,10 +1002,40 @@
             "basestring"
         ]
     ],
+    "transform_colorspace": [
+        [
+            "colorspace_type",
+            "COLORSPACE_TYPES"
+        ]
+    ],
     "transparentize": [
         [
             "transparency",
             "numbers.Real"
+        ]
+    ],
+    "transpose": [],
+    "transverse": [],
+    "unsharp_mask": [
+        [
+            "radius",
+            "numbers.Real"
+        ],
+        [
+            "sigma",
+            "numbers.Real"
+        ],
+        [
+            "amount",
+            "numbers.Real"
+        ],
+        [
+            "threshold",
+            "numbers.Real"
+        ],
+        [
+            "channel",
+            "CHANNELS"
         ]
     ],
     "vignette": [
@@ -734,5 +1069,16 @@
             "method",
             "PIXEL_INTERPOLATE_METHODS"
         ]
-    ]
+    ],
+    "wavelet_denoise": [
+        [
+            "threshold",
+            "numbers.Real"
+        ],
+        [
+            "softness",
+            "numbers.Real"
+        ]
+    ],
+    "white_balance": []
 }

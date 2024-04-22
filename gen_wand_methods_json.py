@@ -27,13 +27,19 @@ METHOD_CONST_TYPE_MAP = dict(
     morphology="MORPHOLOGY_METHODS",
     remap="DISTORTION_METHODS",
     swirl="PIXEL_INTERPOLATE_METHODS",
-    wave="PIXEL_INTERPOLATE_METHODS"
+    wave="PIXEL_INTERPOLATE_METHODS",
+    auto_threshold="AUTO_THRESHOLD_METHODS",
+    merge_layers="IMAGE_LAYER_METHOD"
 )
 
+blacklist = ["allocate", "cdl", "clear", "close", "deconstruct", "destroy", "strip", 'fft', 'ift', 'pseudo', 'raise_exception', 'optimize_layers', 'optimize_transparency', 'reset_coords', 'reset_sequence', 'image_get', 'image_remove', 'import_pixels', 'unique_colors', 'complex', 'image_swap', 'deskew']
+
 with Image(filename='rose:') as img:
-    method_list = [func for func in dir(img) if '_' not in func and callable(getattr(img, func))]
+    method_list = [func for func in dir(img) if (func not in blacklist) and (not func.startswith("iterator")) and (not func.startswith('_')) and callable(getattr(img, func))]
     for method_name in method_list:
-        method_doc = getattr(img, method_name).__doc__ \
+        method_doc = getattr(img, method_name).__doc__ 
+        if not method_doc: continue
+        method_doc = method_doc \
             .replace(":type: ", ":type ") \
             .replace(":params", ":param") \
             .replace(": `basestring`", ": :class:`basestring`") \
@@ -54,13 +60,12 @@ with Image(filename='rose:') as img:
 
         if ":returns:" in method_doc: continue
         if "file_object" in types: continue
-        elif ("wand.font.Font" in types) or ("wand.color.Color" in types) or ("wand.drawing.Drawing" in types) or ("Image" in types) or (method_name == 'complex'): 
+        elif ("wand.font.Font" in types) or ("wand.color.Color" in types) or ("wand.drawing.Drawing" in types) or ("Image" in types) or ("Color" in types) or ("abc.Mapping" in types): 
             continue #TODO: Support this
         if method_name == "spread": types.append("PIXEL_INTERPOLATE_METHODS")
         elif method_name == "trim": params.remove("background_color")
         
-        if len(params) == 0: continue
-        assert len(params) == len(types), print(method_doc, '\n\n', params, types, method_name)
+        #assert len(params) == len(types), print(method_doc, '\n\n', params, types, method_name)
 
         params = list(zip(params, types))
         for id in range(len(params)):

@@ -12,7 +12,11 @@ def gen_comfy_input_types(method_name, param_items):
         if not param_type: continue
         if param_type.isupper():
             input_type = list(getattr(wand.image, param_type))
-            type_config = {"default": "rgb" if param_type == "CHANNELS" else input_type[1]} # first method is usally "undefined"
+            if (method_name == "normalize") and (param == "channel"):
+                input_type = [value for value in input_type if "copy_" + value in wand.image.COMPOSITE_OPERATORS]
+            if (method_name == "merge_layers") and (param == "method"):
+                input_type = ['merge', 'flatten', 'mosaic', 'trimbounds']
+            type_config = {"default": input_type[1]} # first method is usally "undefined"
         
         elif param_type == "float" or param_type == "numbers.Real":
             input_type, min = "FLOAT", 0.0
@@ -32,7 +36,7 @@ def gen_comfy_input_types(method_name, param_items):
             input_type, min = "INT", 0
             if type(default_value).__name__ in ['type', 'NoneType']:
                 default_value = 0
-            if param in ['width', 'height', 'x_res', 'y_res']:
+            if param in ['width', 'height', 'x_res', 'y_res', 'columns', 'rows']:
                 default_value = 512
                 min = 1
             # make kmeans and quantize working
@@ -49,13 +53,37 @@ def gen_comfy_input_types(method_name, param_items):
 
         elif (param_type == "basestring") or (param_type == "floats"): 
             input_type = "STRING"
-            default_value = ''
+            if type(default_value).__name__ in ['type', 'NoneType']:
+                default_value = ''
             if param == "arguments": 
                 if method_name == "distort":
                     default_value = "0, 0, 20, 60, 90, 0, 70, 63, 0, 90, 5, 83, 90, 90, 85, 88"
                 else:
                     default_value = '0.5, 1.0'
-            type_config = {"multiline": True}
+            if param == "ccc":
+                default_value = """
+                    <ColorCorrectionCollection xmlns="urn:ASC:CDL:v1.2">
+                        <ColorCorrection id="cc03345">
+                            <SOPNode>
+                                <Slope> 0.9 1.2 0.5 </Slope>
+                                <Offset> 0.4 -0.5 0.6 </Offset>
+                                <Power> 1.0 0.8 1.5 </Power>
+                            </SOPNode>
+                            <SATNode>
+                                <Saturation> 0.85 </Saturation>
+                            </SATNode>
+                        </ColorCorrection>
+                    </ColorCorrectionCollection>
+                """
+            if param == "matrix":
+                default_value = json.dumps(
+                    [
+                        [1.0, 0.0, 0.0],
+                        [0.0, 1.0, 0.0],
+                        [0.0, 0.0, 1.0],
+                    ]
+                )
+            type_config = {"multiline": True, "default": default_value}
         assert input_type, param_type
         input_types[param] = (input_type, type_config)
     img.close()
@@ -75,7 +103,7 @@ class {node_class_name}:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, '{img_method}').__doc__
+    DESCRIPTION = Image.{img_method}.__doc__
 
     CATEGORY = "{category}"
 
@@ -83,13 +111,17 @@ class {node_class_name}:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, '{img_method}', kwargs, type='{apply_type}')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
 """
 
-apply_whole_methods = ['concat', 'smush', 'coalesce', 'combine', 'complex', 'merge_layers', 'polynomial', 'quantize']
+apply_whole_methods = ['concat', 'smush', 'coalesce', 'combine', 'complex', 'merge_layers', 'polynomial']
 
 with open("nodes.py", 'w') as f:
     f.write("import numpy as np\n")
@@ -98,7 +130,7 @@ with open("nodes.py", 'w') as f:
     f.write("from .utils import *\n")
     img_wand = wand.image.Image(filename='rose:')
     for method_name, param_dict in wand_methods_dict.items():
-        node_class_name = method_name[0].upper()+method_name[1:]
+        node_class_name = ''.join([name_part[0].upper() + name_part[1:] for name_part in method_name.split('_')])
         node_class_str = NODE_CLASS_TEMPLATE.format(
             node_class_name=node_class_name,
             comfy_input_types=gen_comfy_input_types(method_name, param_dict),
@@ -110,9 +142,10 @@ with open("nodes.py", 'w') as f:
 
     f.write("NODE_CLASS_MAPPINGS = {\n")
     for method_name in wand_methods_dict:
-        if method_name == "pseudo": continue
-        node_class_name = method_name[0].upper()+method_name[1:]
+        node_id = ' '.join([name_part[0].upper() + name_part[1:] for name_part in method_name.split('_')])
+        node_class_name = ''.join([name_part[0].upper() + name_part[1:] for name_part in method_name.split('_')])
         f.write(' ' * 4)
-        f.write(f'"ImageMagick {node_class_name}": {node_class_name},')
+        f.write(f'"ImageMagick {node_id}": {node_class_name},')
         f.write('\n')
+        print(f"* ImageMagick {node_id}: [{method_name}](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.{method_name})")
     f.write('}\n')

@@ -3,14 +3,239 @@ from wand.image import Image
 import torch
 from .utils import *
 
-class Blur:
+class AdaptiveBlur:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'blur').__doc__
+    DESCRIPTION = Image.adaptive_blur.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'adaptive_blur', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class AdaptiveResize:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'columns': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'rows': ('INT', {'default': 512, 'min': 1, 'max': 1024})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.adaptive_resize.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'adaptive_resize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class AdaptiveSharpen:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.adaptive_sharpen.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'adaptive_sharpen', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class AdaptiveThreshold:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'offset': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.adaptive_threshold.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'adaptive_threshold', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class AutoGamma:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.auto_gamma.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'auto_gamma', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class AutoLevel:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.auto_level.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'auto_level', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class AutoOrient:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.auto_orient.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'auto_orient', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class AutoThreshold:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'method': (['undefined', 'kapur', 'otsu', 'triangle'], {'default': 'kapur'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.auto_threshold.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'auto_threshold', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class BlueShift:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'factor': ('FLOAT', {'default': 1.5, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.blue_shift.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'blue_shift', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Blur:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.blur.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -18,7 +243,36 @@ class Blur:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'blur', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class BrightnessContrast:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'brightness': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'contrast': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.brightness_contrast.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'brightness_contrast', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -31,7 +285,7 @@ class Canny:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'canny').__doc__
+    DESCRIPTION = Image.canny.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -39,6 +293,10 @@ class Canny:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'canny', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -52,7 +310,7 @@ class Charcoal:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'charcoal').__doc__
+    DESCRIPTION = Image.charcoal.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -60,6 +318,10 @@ class Charcoal:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'charcoal', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -69,11 +331,11 @@ class Charcoal:
 class Chop:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'x': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'y': ('INT', {'default': 0, 'min': 0, 'max': 1024})}}
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'x': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'y': ('INT', {'default': 0, 'min': 0, 'max': 1024})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'chop').__doc__
+    DESCRIPTION = Image.chop.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -81,6 +343,10 @@ class Chop:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'chop', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -90,11 +356,11 @@ class Chop:
 class Clahe:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'number_bins': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'clip_limit': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'number_bins': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'clip_limit': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'clahe').__doc__
+    DESCRIPTION = Image.clahe.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -102,6 +368,10 @@ class Clahe:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'clahe', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -111,11 +381,11 @@ class Clahe:
 class Clamp:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'clamp').__doc__
+    DESCRIPTION = Image.clamp.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -123,7 +393,86 @@ class Clamp:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'clamp', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Coalesce:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.coalesce.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'coalesce', kwargs, type='whole')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class ColorDecisionList:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'ccc': ('STRING', {'multiline': True, 'default': '\n                    <ColorCorrectionCollection xmlns="urn:ASC:CDL:v1.2">\n                        <ColorCorrection id="cc03345">\n                            <SOPNode>\n                                <Slope> 0.9 1.2 0.5 </Slope>\n                                <Offset> 0.4 -0.5 0.6 </Offset>\n                                <Power> 1.0 0.8 1.5 </Power>\n                            </SOPNode>\n                            <SATNode>\n                                <Saturation> 0.85 </Saturation>\n                            </SATNode>\n                        </ColorCorrection>\n                    </ColorCorrectionCollection>\n                '})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.color_decision_list.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'color_decision_list', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class ColorMatrix:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'matrix': ('STRING', {'multiline': True, 'default': '[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.color_matrix.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'color_matrix', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -132,11 +481,11 @@ class Clamp:
 class Combine:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'}), 'colorspace': (['undefined', 'cmy', 'cmyk', 'gray', 'hcl', 'hclp', 'hsb', 'hsi', 'hsl', 'hsv', 'hwb', 'lab', 'lch', 'lchab', 'lchuv', 'log', 'lms', 'luv', 'ohta', 'rec601ycbcr', 'rec709ycbcr', 'rgb', 'scrgb', 'srgb', 'transparent', 'xyy', 'xyz', 'ycbcr', 'ycc', 'ydbdr', 'yiq', 'ypbpr', 'yuv'], {'default': 'cmy'})}}
+        return {'required': {'image': ('IMAGE',), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'}), 'colorspace': (['undefined', 'cmy', 'cmyk', 'gray', 'hcl', 'hclp', 'hsb', 'hsi', 'hsl', 'hsv', 'hwb', 'lab', 'lch', 'lchab', 'lchuv', 'log', 'lms', 'luv', 'ohta', 'rec601ycbcr', 'rec709ycbcr', 'rgb', 'scrgb', 'srgb', 'transparent', 'xyy', 'xyz', 'ycbcr', 'ycc', 'ydbdr', 'yiq', 'ypbpr', 'yuv'], {'default': 'cmy'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'combine').__doc__
+    DESCRIPTION = Image.combine.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -144,6 +493,10 @@ class Combine:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'combine', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -157,7 +510,7 @@ class Concat:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'concat').__doc__
+    DESCRIPTION = Image.concat.__doc__
 
     CATEGORY = "MagickWand"
 
@@ -165,6 +518,10 @@ class Concat:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'concat', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -178,7 +535,7 @@ class Contrast:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'contrast').__doc__
+    DESCRIPTION = Image.contrast.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -186,7 +543,36 @@ class Contrast:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'contrast', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class ContrastStretch:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'black_point': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'white_point': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.contrast_stretch.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'contrast_stretch', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -195,11 +581,11 @@ class Contrast:
 class Crop:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'left': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'top': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'reset_coords': ('BOOLEAN', {'default': True})}}
+        return {'required': {'image': ('IMAGE',), 'left': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'top': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'reset_coords': ('BOOLEAN', {'default': True})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'crop').__doc__
+    DESCRIPTION = Image.crop.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -207,7 +593,36 @@ class Crop:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'crop', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class CycleColorMap:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'offset': ('INT', {'default': 1, 'min': 0, 'max': 1024})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.cycle_color_map.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'cycle_color_map', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -216,11 +631,11 @@ class Crop:
 class Decipher:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'passphrase': ('STRING', {'multiline': True})}}
+        return {'required': {'image': ('IMAGE',), 'passphrase': ('STRING', {'multiline': True, 'default': ''})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'decipher').__doc__
+    DESCRIPTION = Image.decipher.__doc__
 
     CATEGORY = "MagickWand/Cipher"
 
@@ -228,28 +643,36 @@ class Decipher:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'decipher', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
 
 
-class Deskew:
+class Despeckle:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'threshold': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+        return {'required': {'image': ('IMAGE',)}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'deskew').__doc__
+    DESCRIPTION = Image.despeckle.__doc__
 
-    CATEGORY = "MagickWand/Transformation"
+    CATEGORY = "MagickWand"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        apply_to_wand_seq(wand_img, 'deskew', kwargs, type='iterative')
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'despeckle', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -258,11 +681,11 @@ class Deskew:
 class Distort:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'method': (['undefined', 'affine', 'affine_projection', 'scale_rotate_translate', 'perspective', 'perspective_projection', 'bilinear_forward', 'bilinear_reverse', 'polynomial', 'arc', 'polar', 'depolar', 'cylinder_2_plane', 'plane_2_cylinder', 'barrel', 'barrel_inverse', 'shepards', 'resize', 'sentinel', 'rigidaffine'], {'default': 'affine'}), 'arguments': ('STRING', {'multiline': True}), 'best_fit': ('BOOLEAN', {'default': False}), 'filter': (['undefined', 'point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'jinc', 'sinc', 'sincfast', 'kaiser', 'welsh', 'parzen', 'bohman', 'bartlett', 'lagrange', 'lanczos', 'lanczossharp', 'lanczos2', 'lanczos2sharp', 'robidoux', 'robidouxsharp', 'cosine', 'spline', 'sentinel'], {'default': 'point'})}}
+        return {'required': {'image': ('IMAGE',), 'method': (['undefined', 'affine', 'affine_projection', 'scale_rotate_translate', 'perspective', 'perspective_projection', 'bilinear_forward', 'bilinear_reverse', 'polynomial', 'arc', 'polar', 'depolar', 'cylinder_2_plane', 'plane_2_cylinder', 'barrel', 'barrel_inverse', 'shepards', 'resize', 'sentinel', 'rigidaffine'], {'default': 'affine'}), 'arguments': ('STRING', {'multiline': True, 'default': '0, 0, 20, 60, 90, 0, 70, 63, 0, 90, 5, 83, 90, 90, 85, 88'}), 'best_fit': ('BOOLEAN', {'default': False}), 'filter': (['undefined', 'point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'jinc', 'sinc', 'sincfast', 'kaiser', 'welsh', 'parzen', 'bohman', 'bartlett', 'lagrange', 'lanczos', 'lanczossharp', 'lanczos2', 'lanczos2sharp', 'robidoux', 'robidouxsharp', 'cosine', 'spline', 'sentinel'], {'default': 'point'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'distort').__doc__
+    DESCRIPTION = Image.distort.__doc__
 
     CATEGORY = "MagickWand/Distortion"
 
@@ -270,6 +693,10 @@ class Distort:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'distort', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -283,7 +710,7 @@ class Edge:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'edge').__doc__
+    DESCRIPTION = Image.edge.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -291,6 +718,10 @@ class Edge:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'edge', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -304,7 +735,7 @@ class Emboss:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'emboss').__doc__
+    DESCRIPTION = Image.emboss.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -312,6 +743,10 @@ class Emboss:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'emboss', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -321,11 +756,11 @@ class Emboss:
 class Encipher:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'passphrase': ('STRING', {'multiline': True})}}
+        return {'required': {'image': ('IMAGE',), 'passphrase': ('STRING', {'multiline': True, 'default': ''})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'encipher').__doc__
+    DESCRIPTION = Image.encipher.__doc__
 
     CATEGORY = "MagickWand/Cipher"
 
@@ -333,7 +768,36 @@ class Encipher:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'encipher', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Enhance:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.enhance.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'enhance', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -342,11 +806,11 @@ class Encipher:
 class Equalize:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'equalize').__doc__
+    DESCRIPTION = Image.equalize.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -354,6 +818,10 @@ class Equalize:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'equalize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -363,11 +831,11 @@ class Equalize:
 class Evaluate:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'operator': (['undefined', 'abs', 'add', 'addmodulus', 'and', 'cosine', 'divide', 'exponential', 'gaussiannoise', 'impulsenoise', 'laplaciannoise', 'leftshift', 'log', 'max', 'mean', 'median', 'min', 'multiplicativenoise', 'multiply', 'or', 'poissonnoise', 'pow', 'rightshift', 'rootmeansquare', 'set', 'sine', 'subtract', 'sum', 'thresholdblack', 'threshold', 'thresholdwhite', 'uniformnoise', 'xor', 'inverse_log'], {'default': 'abs'}), 'value': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'operator': (['undefined', 'abs', 'add', 'addmodulus', 'and', 'cosine', 'divide', 'exponential', 'gaussiannoise', 'impulsenoise', 'laplaciannoise', 'leftshift', 'log', 'max', 'mean', 'median', 'min', 'multiplicativenoise', 'multiply', 'or', 'poissonnoise', 'pow', 'rightshift', 'rootmeansquare', 'set', 'sine', 'subtract', 'sum', 'thresholdblack', 'threshold', 'thresholdwhite', 'uniformnoise', 'xor', 'inverse_log'], {'default': 'abs'}), 'value': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'evaluate').__doc__
+    DESCRIPTION = Image.evaluate.__doc__
 
     CATEGORY = "MagickWand/Color Enhancement"
 
@@ -375,6 +843,10 @@ class Evaluate:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'evaluate', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -384,11 +856,11 @@ class Evaluate:
 class Extent:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'x': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'y': ('INT', {'default': 0, 'min': 0, 'max': 1024})}}
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'x': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'y': ('INT', {'default': 0, 'min': 0, 'max': 1024})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'extent').__doc__
+    DESCRIPTION = Image.extent.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -396,7 +868,86 @@ class Extent:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'extent', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Flip:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.flip.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'flip', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Flop:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.flop.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'flop', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class ForwardFourierTransform:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'magnitude': ('BOOLEAN', {'default': True})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.forward_fourier_transform.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'forward_fourier_transform', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -405,11 +956,11 @@ class Extent:
 class Function:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'function': (['undefined', 'arcsin', 'arctan', 'polynomial', 'sinusoid'], {'default': 'arcsin'}), 'arguments': ('STRING', {'multiline': True}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'function': (['undefined', 'arcsin', 'arctan', 'polynomial', 'sinusoid'], {'default': 'arcsin'}), 'arguments': ('STRING', {'multiline': True, 'default': '0.5, 1.0'}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'function').__doc__
+    DESCRIPTION = Image.function.__doc__
 
     CATEGORY = "MagickWand/Color Enhancement"
 
@@ -417,6 +968,10 @@ class Function:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'function', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -426,11 +981,11 @@ class Function:
 class Gamma:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'adjustment_value': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'adjustment_value': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'gamma').__doc__
+    DESCRIPTION = Image.gamma.__doc__
 
     CATEGORY = "MagickWand/Color Enhancement"
 
@@ -438,7 +993,61 @@ class Gamma:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'gamma', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class GaussianBlur:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.gaussian_blur.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'gaussian_blur', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class HoughLines:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'threshold': ('INT', {'default': 40, 'min': 0, 'max': 1024})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.hough_lines.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'hough_lines', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -451,7 +1060,7 @@ class Implode:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'implode').__doc__
+    DESCRIPTION = Image.implode.__doc__
 
     CATEGORY = "MagickWand/Distortion"
 
@@ -459,6 +1068,10 @@ class Implode:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'implode', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -472,7 +1085,7 @@ class Kmeans:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'kmeans').__doc__
+    DESCRIPTION = Image.kmeans.__doc__
 
     CATEGORY = "MagickWand/Quantize"
 
@@ -480,6 +1093,10 @@ class Kmeans:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'kmeans', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -493,7 +1110,7 @@ class Kuwahara:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'kuwahara').__doc__
+    DESCRIPTION = Image.kuwahara.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -501,6 +1118,10 @@ class Kuwahara:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'kuwahara', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -510,11 +1131,11 @@ class Kuwahara:
 class Level:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'black': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'white': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'gamma': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'black': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'white': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'gamma': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'level').__doc__
+    DESCRIPTION = Image.level.__doc__
 
     CATEGORY = "MagickWand/Color Enhancement"
 
@@ -522,6 +1143,10 @@ class Level:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'level', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -531,11 +1156,11 @@ class Level:
 class Levelize:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'black': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'white': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'gamma': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'black': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'white': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'gamma': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'levelize').__doc__
+    DESCRIPTION = Image.levelize.__doc__
 
     CATEGORY = "MagickWand/Color Enhancement"
 
@@ -543,7 +1168,161 @@ class Levelize:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'levelize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class LinearStretch:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'black_point': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'white_point': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.linear_stretch.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'linear_stretch', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class LiquidRescale:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'delta_x': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'rigidity': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.liquid_rescale.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'liquid_rescale', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class LocalContrast:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 10, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'strength': ('FLOAT', {'default': 12.5, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.local_contrast.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'local_contrast', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Magnify:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.magnify.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'magnify', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class MeanShift:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'color_distance': ('FLOAT', {'default': 0.1, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.mean_shift.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'mean_shift', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class MergeLayers:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'method': (['merge', 'flatten', 'mosaic', 'trimbounds'], {'default': 'flatten'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.merge_layers.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'merge_layers', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -552,11 +1331,11 @@ class Levelize:
 class Mode:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024})}}
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'mode').__doc__
+    DESCRIPTION = Image.mode.__doc__
 
     CATEGORY = "MagickWand/Transformation"
 
@@ -564,6 +1343,10 @@ class Mode:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'mode', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -577,7 +1360,7 @@ class Modulate:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'modulate').__doc__
+    DESCRIPTION = Image.modulate.__doc__
 
     CATEGORY = "MagickWand/Transformation"
 
@@ -585,6 +1368,10 @@ class Modulate:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'modulate', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -594,11 +1381,11 @@ class Modulate:
 class Morphology:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'method': (['undefined', 'convolve', 'correlate', 'erode', 'dilate', 'erode_intensity', 'dilate_intensity', 'iterative_distance', 'open', 'close', 'open_intensity', 'close_intensity', 'smooth', 'edgein', 'edgeout', 'edge', 'tophat', 'bottom_hat', 'hit_and_miss', 'thinning', 'thicken', 'distance', 'voronoi'], {'default': 'convolve'}), 'kernel': (['undefined', 'unity', 'gaussian', 'dog', 'log', 'blur', 'comet', 'binomial', 'laplacian', 'sobel', 'frei_chen', 'roberts', 'prewitt', 'compass', 'kirsch', 'diamond', 'square', 'rectangle', 'octagon', 'disk', 'plus', 'cross', 'ring', 'peaks', 'edges', 'corners', 'diagonals', 'line_ends', 'line_junctions', 'ridges', 'convex_hull', 'thin_se', 'skeleton', 'chebyshev', 'manhattan', 'octagonal', 'euclidean', 'user_defined'], {'default': 'unity'}), 'iterations': ('INT', {'default': 1, 'min': 0, 'max': 1024}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'method': (['undefined', 'convolve', 'correlate', 'erode', 'dilate', 'erode_intensity', 'dilate_intensity', 'iterative_distance', 'open', 'close', 'open_intensity', 'close_intensity', 'smooth', 'edgein', 'edgeout', 'edge', 'tophat', 'bottom_hat', 'hit_and_miss', 'thinning', 'thicken', 'distance', 'voronoi'], {'default': 'convolve'}), 'kernel': (['undefined', 'unity', 'gaussian', 'dog', 'log', 'blur', 'comet', 'binomial', 'laplacian', 'sobel', 'frei_chen', 'roberts', 'prewitt', 'compass', 'kirsch', 'diamond', 'square', 'rectangle', 'octagon', 'disk', 'plus', 'cross', 'ring', 'peaks', 'edges', 'corners', 'diagonals', 'line_ends', 'line_junctions', 'ridges', 'convex_hull', 'thin_se', 'skeleton', 'chebyshev', 'manhattan', 'octagonal', 'euclidean', 'user_defined'], {'default': 'unity'}), 'iterations': ('INT', {'default': 1, 'min': 0, 'max': 1024}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'morphology').__doc__
+    DESCRIPTION = Image.morphology.__doc__
 
     CATEGORY = "MagickWand/Morphology"
 
@@ -606,7 +1393,36 @@ class Morphology:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'morphology', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class MotionBlur:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'angle': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.motion_blur.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'motion_blur', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -615,11 +1431,11 @@ class Morphology:
 class Negate:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'grayscale': ('BOOLEAN', {'default': False}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'grayscale': ('BOOLEAN', {'default': False}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'negate').__doc__
+    DESCRIPTION = Image.negate.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -627,6 +1443,10 @@ class Negate:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'negate', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -636,11 +1456,11 @@ class Negate:
 class Noise:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'noise_type': (['undefined', 'uniform', 'gaussian', 'multiplicative_gaussian', 'impulse', 'laplacian', 'poisson', 'random'], {'default': 'uniform'}), 'attenuate': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'noise_type': (['undefined', 'uniform', 'gaussian', 'multiplicative_gaussian', 'impulse', 'laplacian', 'poisson', 'random'], {'default': 'uniform'}), 'attenuate': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'noise').__doc__
+    DESCRIPTION = Image.noise.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -648,6 +1468,10 @@ class Noise:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'noise', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -657,11 +1481,11 @@ class Noise:
 class Normalize:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'channel': (['red', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha'], {'default': 'cyan'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'normalize').__doc__
+    DESCRIPTION = Image.normalize.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -669,7 +1493,61 @@ class Normalize:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'normalize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class OilPaint:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.oil_paint.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'oil_paint', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class OrderedDither:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'threshold_map': ('STRING', {'multiline': True, 'default': 'threshold'}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.ordered_dither.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'ordered_dither', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -678,11 +1556,11 @@ class Normalize:
 class Polynomial:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'arguments': ('STRING', {'multiline': True})}}
+        return {'required': {'image': ('IMAGE',), 'arguments': ('STRING', {'multiline': True, 'default': '0.5, 1.0'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'polynomial').__doc__
+    DESCRIPTION = Image.polynomial.__doc__
 
     CATEGORY = "MagickWand/Distortion"
 
@@ -690,6 +1568,10 @@ class Polynomial:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'polynomial', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -703,7 +1585,7 @@ class Posterize:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'posterize').__doc__
+    DESCRIPTION = Image.posterize.__doc__
 
     CATEGORY = "MagickWand/Quantize"
 
@@ -711,28 +1593,11 @@ class Posterize:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'posterize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
-
-
-class Pseudo:
-    @classmethod
-    def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'pseudo': ('STRING', {'multiline': True})}}
-
-    RETURN_TYPES = ("IMAGE",)
-    FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'pseudo').__doc__
-
-    CATEGORY = "MagickWand"
-
-    def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        apply_to_wand_seq(wand_img, 'pseudo', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -745,7 +1610,7 @@ class Quantize:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'quantize').__doc__
+    DESCRIPTION = Image.quantize.__doc__
 
     CATEGORY = "MagickWand/Quantize"
 
@@ -753,7 +1618,61 @@ class Quantize:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        apply_to_wand_seq(wand_img, 'quantize', kwargs, type='whole')
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'quantize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class RandomThreshold:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'low': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'high': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.random_threshold.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'random_threshold', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class RangeThreshold:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'low_black': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'low_white': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'high_white': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'high_black': ('FLOAT', {'default': 0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.range_threshold.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'range_threshold', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -762,11 +1681,11 @@ class Quantize:
 class Resample:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'x_res': ('FLOAT', {'default': 128, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'y_res': ('FLOAT', {'default': 128, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'filter': (['undefined', 'point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'jinc', 'sinc', 'sincfast', 'kaiser', 'welsh', 'parzen', 'bohman', 'bartlett', 'lagrange', 'lanczos', 'lanczossharp', 'lanczos2', 'lanczos2sharp', 'robidoux', 'robidouxsharp', 'cosine', 'spline', 'sentinel'], {'default': 'point'}), 'blur': ('FLOAT', {'default': 1, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+        return {'required': {'image': ('IMAGE',), 'x_res': ('FLOAT', {'default': 512, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'y_res': ('FLOAT', {'default': 512, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'filter': (['undefined', 'point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'jinc', 'sinc', 'sincfast', 'kaiser', 'welsh', 'parzen', 'bohman', 'bartlett', 'lagrange', 'lanczos', 'lanczossharp', 'lanczos2', 'lanczos2sharp', 'robidoux', 'robidouxsharp', 'cosine', 'spline', 'sentinel'], {'default': 'point'}), 'blur': ('FLOAT', {'default': 1, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'resample').__doc__
+    DESCRIPTION = Image.resample.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -774,6 +1693,10 @@ class Resample:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'resample', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -783,11 +1706,11 @@ class Resample:
 class Resize:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'filter': (['undefined', 'point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'jinc', 'sinc', 'sincfast', 'kaiser', 'welsh', 'parzen', 'bohman', 'bartlett', 'lagrange', 'lanczos', 'lanczossharp', 'lanczos2', 'lanczos2sharp', 'robidoux', 'robidouxsharp', 'cosine', 'spline', 'sentinel'], {'default': 'point'}), 'blur': ('FLOAT', {'default': 1, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'filter': (['undefined', 'point', 'box', 'triangle', 'hermite', 'hanning', 'hamming', 'blackman', 'gaussian', 'quadratic', 'cubic', 'catrom', 'mitchell', 'jinc', 'sinc', 'sincfast', 'kaiser', 'welsh', 'parzen', 'bohman', 'bartlett', 'lagrange', 'lanczos', 'lanczossharp', 'lanczos2', 'lanczos2sharp', 'robidoux', 'robidouxsharp', 'cosine', 'spline', 'sentinel'], {'default': 'point'}), 'blur': ('FLOAT', {'default': 1, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'resize').__doc__
+    DESCRIPTION = Image.resize.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -795,6 +1718,10 @@ class Resize:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'resize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -808,7 +1735,7 @@ class Roll:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'roll').__doc__
+    DESCRIPTION = Image.roll.__doc__
 
     CATEGORY = "MagickWand/Transformation"
 
@@ -816,7 +1743,36 @@ class Roll:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'roll', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class RotationalBlur:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'angle': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.rotational_blur.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'rotational_blur', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -825,11 +1781,11 @@ class Roll:
 class Sample:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024})}}
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'sample').__doc__
+    DESCRIPTION = Image.sample.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -837,6 +1793,10 @@ class Sample:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'sample', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -846,11 +1806,11 @@ class Sample:
 class Scale:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'columns': ('INT', {'default': 1, 'min': 0, 'max': 1024}), 'rows': ('INT', {'default': 1, 'min': 0, 'max': 1024})}}
+        return {'required': {'image': ('IMAGE',), 'columns': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'rows': ('INT', {'default': 512, 'min': 1, 'max': 1024})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'scale').__doc__
+    DESCRIPTION = Image.scale.__doc__
 
     CATEGORY = "MagickWand/Distortion"
 
@@ -858,7 +1818,61 @@ class Scale:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'scale', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class SelectiveBlur:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'threshold': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.selective_blur.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'selective_blur', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class SepiaTone:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'threshold': ('FLOAT', {'default': 0.8, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.sepia_tone.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'sepia_tone', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -871,7 +1885,7 @@ class Shade:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'shade').__doc__
+    DESCRIPTION = Image.shade.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -879,6 +1893,10 @@ class Shade:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'shade', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -892,7 +1910,7 @@ class Shadow:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'shadow').__doc__
+    DESCRIPTION = Image.shadow.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -900,6 +1918,10 @@ class Shadow:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'shadow', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -909,11 +1931,11 @@ class Shadow:
 class Sharpen:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'sharpen').__doc__
+    DESCRIPTION = Image.sharpen.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -921,6 +1943,10 @@ class Sharpen:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'sharpen', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -930,11 +1956,11 @@ class Sharpen:
 class Shave:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'columns': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'rows': ('INT', {'default': 0, 'min': 0, 'max': 1024})}}
+        return {'required': {'image': ('IMAGE',), 'columns': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'rows': ('INT', {'default': 512, 'min': 1, 'max': 1024})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'shave').__doc__
+    DESCRIPTION = Image.shave.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -942,7 +1968,36 @@ class Shave:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'shave', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class SigmoidalContrast:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'sharpen': ('BOOLEAN', {'default': True}), 'strength': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'midpoint': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.sigmoidal_contrast.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'sigmoidal_contrast', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -955,7 +2010,7 @@ class Sketch:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'sketch').__doc__
+    DESCRIPTION = Image.sketch.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -963,6 +2018,10 @@ class Sketch:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'sketch', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -976,7 +2035,7 @@ class Smush:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'smush').__doc__
+    DESCRIPTION = Image.smush.__doc__
 
     CATEGORY = "MagickWand"
 
@@ -984,6 +2043,10 @@ class Smush:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'smush', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -993,11 +2056,11 @@ class Smush:
 class Solarize:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'threshold': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'threshold': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'solarize').__doc__
+    DESCRIPTION = Image.solarize.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -1005,6 +2068,10 @@ class Solarize:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'solarize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1014,11 +2081,11 @@ class Solarize:
 class Splice:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'x': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'y': ('INT', {'default': 0, 'min': 0, 'max': 1024})}}
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'x': ('INT', {'default': 0, 'min': 0, 'max': 1024}), 'y': ('INT', {'default': 0, 'min': 0, 'max': 1024})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'splice').__doc__
+    DESCRIPTION = Image.splice.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -1026,6 +2093,10 @@ class Splice:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'splice', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1039,7 +2110,7 @@ class Spread:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'spread').__doc__
+    DESCRIPTION = Image.spread.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -1047,6 +2118,10 @@ class Spread:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'spread', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1056,11 +2131,11 @@ class Spread:
 class Statistic:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'stat': (['undefined', 'gradient', 'maximum', 'mean', 'median', 'minimum', 'mode', 'nonpeak', 'root_mean_square', 'standard_deviation'], {'default': 'gradient'}), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'stat': (['undefined', 'gradient', 'maximum', 'mean', 'median', 'minimum', 'mode', 'nonpeak', 'root_mean_square', 'standard_deviation'], {'default': 'gradient'}), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'statistic').__doc__
+    DESCRIPTION = Image.statistic.__doc__
 
     CATEGORY = "MagickWand/Transformation"
 
@@ -1068,6 +2143,10 @@ class Statistic:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'statistic', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1081,7 +2160,7 @@ class Swirl:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'swirl').__doc__
+    DESCRIPTION = Image.swirl.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -1089,6 +2168,10 @@ class Swirl:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'swirl', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1098,11 +2181,11 @@ class Swirl:
 class Threshold:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'threshold': ('FLOAT', {'default': 0.5, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'rgb'})}}
+        return {'required': {'image': ('IMAGE',), 'threshold': ('FLOAT', {'default': 0.5, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'threshold').__doc__
+    DESCRIPTION = Image.threshold.__doc__
 
     CATEGORY = "MagickWand/Threshold"
 
@@ -1110,6 +2193,10 @@ class Threshold:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'threshold', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1119,11 +2206,11 @@ class Threshold:
 class Thumbnail:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024})}}
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 512, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 512, 'min': 1, 'max': 1024})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'thumbnail').__doc__
+    DESCRIPTION = Image.thumbnail.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -1131,6 +2218,10 @@ class Thumbnail:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'thumbnail', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1140,11 +2231,11 @@ class Thumbnail:
 class Transform:
     @classmethod
     def INPUT_TYPES(s):
-        return {'required': {'image': ('IMAGE',), 'crop': ('STRING', {'multiline': True}), 'resize': ('STRING', {'multiline': True})}}
+        return {'required': {'image': ('IMAGE',), 'crop': ('STRING', {'multiline': True, 'default': ''}), 'resize': ('STRING', {'multiline': True, 'default': ''})}}
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'transform').__doc__
+    DESCRIPTION = Image.transform.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -1152,7 +2243,36 @@ class Transform:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'transform', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class TransformColorspace:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'colorspace_type': (['undefined', 'cmy', 'cmyk', 'gray', 'hcl', 'hclp', 'hsb', 'hsi', 'hsl', 'hsv', 'hwb', 'lab', 'lch', 'lchab', 'lchuv', 'log', 'lms', 'luv', 'ohta', 'rec601ycbcr', 'rec709ycbcr', 'rgb', 'scrgb', 'srgb', 'transparent', 'xyy', 'xyz', 'ycbcr', 'ycc', 'ydbdr', 'yiq', 'ypbpr', 'yuv'], {'default': 'cmy'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.transform_colorspace.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'transform_colorspace', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -1165,7 +2285,7 @@ class Transparentize:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'transparentize').__doc__
+    DESCRIPTION = Image.transparentize.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -1173,7 +2293,86 @@ class Transparentize:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'transparentize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Transpose:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.transpose.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'transpose', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Transverse:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.transverse.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'transverse', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class UnsharpMask:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'radius': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'sigma': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'amount': ('FLOAT', {'default': 1.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'threshold': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'channel': (['undefined', 'red', 'gray', 'cyan', 'green', 'magenta', 'blue', 'yellow', 'black', 'alpha', 'opacity', 'index', 'readmask', 'write_mask', 'meta', 'composite_channels', 'all_channels', 'true_alpha', 'rgb', 'rgb_channels', 'gray_channels', 'sync_channels', 'default_channels'], {'default': 'red'})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.unsharp_mask.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'unsharp_mask', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
@@ -1186,7 +2385,7 @@ class Vignette:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'vignette').__doc__
+    DESCRIPTION = Image.vignette.__doc__
 
     CATEGORY = "MagickWand/Resizing and cropping"
 
@@ -1194,6 +2393,10 @@ class Vignette:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'vignette', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1207,7 +2410,7 @@ class Wave:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    DESCRIPTION = getattr(Image, 'wave').__doc__
+    DESCRIPTION = Image.wave.__doc__
 
     CATEGORY = "MagickWand/Effects"
 
@@ -1215,56 +2418,146 @@ class Wave:
         wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, 'wave', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
         return (out, )
 
+
+class WaveletDenoise:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'threshold': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01}), 'softness': ('FLOAT', {'default': 0.0, 'min': 0.0, 'max': 1024, 'step': 0.01})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.wavelet_denoise.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'wavelet_denoise', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class WhiteBalance:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',)}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = Image.white_balance.__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        if "matrix" in kwargs:
+            import ast
+            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        apply_to_wand_seq(wand_img, 'white_balance', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
 NODE_CLASS_MAPPINGS = {
+    "ImageMagick Adaptive Blur": AdaptiveBlur,
+    "ImageMagick Adaptive Resize": AdaptiveResize,
+    "ImageMagick Adaptive Sharpen": AdaptiveSharpen,
+    "ImageMagick Adaptive Threshold": AdaptiveThreshold,
+    "ImageMagick Auto Gamma": AutoGamma,
+    "ImageMagick Auto Level": AutoLevel,
+    "ImageMagick Auto Orient": AutoOrient,
+    "ImageMagick Auto Threshold": AutoThreshold,
+    "ImageMagick Blue Shift": BlueShift,
     "ImageMagick Blur": Blur,
+    "ImageMagick Brightness Contrast": BrightnessContrast,
     "ImageMagick Canny": Canny,
     "ImageMagick Charcoal": Charcoal,
     "ImageMagick Chop": Chop,
     "ImageMagick Clahe": Clahe,
     "ImageMagick Clamp": Clamp,
+    "ImageMagick Coalesce": Coalesce,
+    "ImageMagick Color Decision List": ColorDecisionList,
+    "ImageMagick Color Matrix": ColorMatrix,
     "ImageMagick Combine": Combine,
     "ImageMagick Concat": Concat,
     "ImageMagick Contrast": Contrast,
+    "ImageMagick Contrast Stretch": ContrastStretch,
     "ImageMagick Crop": Crop,
+    "ImageMagick Cycle Color Map": CycleColorMap,
     "ImageMagick Decipher": Decipher,
-    "ImageMagick Deskew": Deskew,
+    "ImageMagick Despeckle": Despeckle,
     "ImageMagick Distort": Distort,
     "ImageMagick Edge": Edge,
     "ImageMagick Emboss": Emboss,
     "ImageMagick Encipher": Encipher,
+    "ImageMagick Enhance": Enhance,
     "ImageMagick Equalize": Equalize,
     "ImageMagick Evaluate": Evaluate,
     "ImageMagick Extent": Extent,
+    "ImageMagick Flip": Flip,
+    "ImageMagick Flop": Flop,
+    "ImageMagick Forward Fourier Transform": ForwardFourierTransform,
     "ImageMagick Function": Function,
     "ImageMagick Gamma": Gamma,
+    "ImageMagick Gaussian Blur": GaussianBlur,
+    "ImageMagick Hough Lines": HoughLines,
     "ImageMagick Implode": Implode,
     "ImageMagick Kmeans": Kmeans,
     "ImageMagick Kuwahara": Kuwahara,
     "ImageMagick Level": Level,
     "ImageMagick Levelize": Levelize,
+    "ImageMagick Linear Stretch": LinearStretch,
+    "ImageMagick Liquid Rescale": LiquidRescale,
+    "ImageMagick Local Contrast": LocalContrast,
+    "ImageMagick Magnify": Magnify,
+    "ImageMagick Mean Shift": MeanShift,
+    "ImageMagick Merge Layers": MergeLayers,
     "ImageMagick Mode": Mode,
     "ImageMagick Modulate": Modulate,
     "ImageMagick Morphology": Morphology,
+    "ImageMagick Motion Blur": MotionBlur,
     "ImageMagick Negate": Negate,
     "ImageMagick Noise": Noise,
     "ImageMagick Normalize": Normalize,
+    "ImageMagick Oil Paint": OilPaint,
+    "ImageMagick Ordered Dither": OrderedDither,
     "ImageMagick Polynomial": Polynomial,
     "ImageMagick Posterize": Posterize,
     "ImageMagick Quantize": Quantize,
+    "ImageMagick Random Threshold": RandomThreshold,
+    "ImageMagick Range Threshold": RangeThreshold,
     "ImageMagick Resample": Resample,
     "ImageMagick Resize": Resize,
     "ImageMagick Roll": Roll,
+    "ImageMagick Rotational Blur": RotationalBlur,
     "ImageMagick Sample": Sample,
     "ImageMagick Scale": Scale,
+    "ImageMagick Selective Blur": SelectiveBlur,
+    "ImageMagick Sepia Tone": SepiaTone,
     "ImageMagick Shade": Shade,
     "ImageMagick Shadow": Shadow,
     "ImageMagick Sharpen": Sharpen,
     "ImageMagick Shave": Shave,
+    "ImageMagick Sigmoidal Contrast": SigmoidalContrast,
     "ImageMagick Sketch": Sketch,
     "ImageMagick Smush": Smush,
     "ImageMagick Solarize": Solarize,
@@ -1275,7 +2568,13 @@ NODE_CLASS_MAPPINGS = {
     "ImageMagick Threshold": Threshold,
     "ImageMagick Thumbnail": Thumbnail,
     "ImageMagick Transform": Transform,
+    "ImageMagick Transform Colorspace": TransformColorspace,
     "ImageMagick Transparentize": Transparentize,
+    "ImageMagick Transpose": Transpose,
+    "ImageMagick Transverse": Transverse,
+    "ImageMagick Unsharp Mask": UnsharpMask,
     "ImageMagick Vignette": Vignette,
     "ImageMagick Wave": Wave,
+    "ImageMagick Wavelet Denoise": WaveletDenoise,
+    "ImageMagick White Balance": WhiteBalance,
 }

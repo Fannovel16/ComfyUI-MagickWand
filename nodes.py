@@ -1,7 +1,7 @@
 import numpy as np
 from wand.image import Image
 import torch
-from .utils import HWC3, remove_comments
+from .utils import *
 
 class Blur:
     @classmethod
@@ -15,17 +15,13 @@ class Blur:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'blur')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'blur', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Canny:
@@ -40,17 +36,13 @@ class Canny:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'canny')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'canny', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Charcoal:
@@ -65,17 +57,13 @@ class Charcoal:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'charcoal')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'charcoal', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Chop:
@@ -90,17 +78,13 @@ class Chop:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'chop')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'chop', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Clahe:
@@ -115,17 +99,13 @@ class Clahe:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'clahe')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'clahe', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Clamp:
@@ -140,17 +120,13 @@ class Clamp:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'clamp')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'clamp', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Combine:
@@ -165,17 +141,34 @@ class Combine:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'combine')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'combine', kwargs, type='whole')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Concat:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'stacked': ('BOOLEAN', {'default': False})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = getattr(Image, 'concat').__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        apply_to_wand_seq(wand_img, 'concat', kwargs, type='whole')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Contrast:
@@ -190,17 +183,13 @@ class Contrast:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'contrast')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'contrast', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Crop:
@@ -215,17 +204,13 @@ class Crop:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'crop')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'crop', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Decipher:
@@ -240,17 +225,13 @@ class Decipher:
     CATEGORY = "MagickWand/Cipher"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'decipher')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'decipher', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Deskew:
@@ -265,17 +246,13 @@ class Deskew:
     CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'deskew')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'deskew', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Distort:
@@ -290,17 +267,13 @@ class Distort:
     CATEGORY = "MagickWand/Distortion"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'distort')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'distort', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Edge:
@@ -315,17 +288,13 @@ class Edge:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'edge')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'edge', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Emboss:
@@ -340,17 +309,13 @@ class Emboss:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'emboss')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'emboss', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Encipher:
@@ -365,17 +330,13 @@ class Encipher:
     CATEGORY = "MagickWand/Cipher"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'encipher')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'encipher', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Equalize:
@@ -390,17 +351,13 @@ class Equalize:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'equalize')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'equalize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Evaluate:
@@ -415,17 +372,13 @@ class Evaluate:
     CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'evaluate')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'evaluate', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Extent:
@@ -440,17 +393,13 @@ class Extent:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'extent')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'extent', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Function:
@@ -465,17 +414,13 @@ class Function:
     CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'function')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'function', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Gamma:
@@ -490,17 +435,13 @@ class Gamma:
     CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'gamma')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'gamma', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Implode:
@@ -515,17 +456,13 @@ class Implode:
     CATEGORY = "MagickWand/Distortion"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'implode')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'implode', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Kmeans:
@@ -540,17 +477,13 @@ class Kmeans:
     CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'kmeans')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'kmeans', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Kuwahara:
@@ -565,17 +498,13 @@ class Kuwahara:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'kuwahara')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'kuwahara', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Level:
@@ -590,17 +519,13 @@ class Level:
     CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'level')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'level', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Levelize:
@@ -615,17 +540,13 @@ class Levelize:
     CATEGORY = "MagickWand/Color Enhancement"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'levelize')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'levelize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Mode:
@@ -640,17 +561,13 @@ class Mode:
     CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'mode')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'mode', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Modulate:
@@ -665,17 +582,13 @@ class Modulate:
     CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'modulate')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'modulate', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Morphology:
@@ -690,17 +603,13 @@ class Morphology:
     CATEGORY = "MagickWand/Morphology"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'morphology')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'morphology', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Negate:
@@ -715,17 +624,13 @@ class Negate:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'negate')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'negate', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Noise:
@@ -740,17 +645,13 @@ class Noise:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'noise')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'noise', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Normalize:
@@ -765,17 +666,13 @@ class Normalize:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'normalize')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'normalize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Polynomial:
@@ -790,17 +687,13 @@ class Polynomial:
     CATEGORY = "MagickWand/Distortion"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'polynomial')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'polynomial', kwargs, type='whole')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Posterize:
@@ -815,17 +708,34 @@ class Posterize:
     CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'posterize')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'posterize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Pseudo:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'width': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'height': ('INT', {'default': 128, 'min': 1, 'max': 1024}), 'pseudo': ('STRING', {'multiline': True})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = getattr(Image, 'pseudo').__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        apply_to_wand_seq(wand_img, 'pseudo', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Quantize:
@@ -840,17 +750,13 @@ class Quantize:
     CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'quantize')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'quantize', kwargs, type='whole')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Resample:
@@ -865,17 +771,13 @@ class Resample:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'resample')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'resample', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Resize:
@@ -890,17 +792,13 @@ class Resize:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'resize')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'resize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Roll:
@@ -915,17 +813,13 @@ class Roll:
     CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'roll')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'roll', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Sample:
@@ -940,17 +834,13 @@ class Sample:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'sample')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'sample', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Scale:
@@ -965,17 +855,13 @@ class Scale:
     CATEGORY = "MagickWand/Distortion"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'scale')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'scale', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Shade:
@@ -990,17 +876,13 @@ class Shade:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'shade')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'shade', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Shadow:
@@ -1015,17 +897,13 @@ class Shadow:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'shadow')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'shadow', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Sharpen:
@@ -1040,17 +918,13 @@ class Sharpen:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'sharpen')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'sharpen', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Shave:
@@ -1065,17 +939,13 @@ class Shave:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'shave')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'shave', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Sketch:
@@ -1090,17 +960,34 @@ class Sketch:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'sketch')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'sketch', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
+
+
+class Smush:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {'required': {'image': ('IMAGE',), 'stacked': ('BOOLEAN', {'default': False}), 'offset': ('INT', {'default': 0, 'min': 0, 'max': 1024})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "execute"
+    DESCRIPTION = getattr(Image, 'smush').__doc__
+
+    CATEGORY = "MagickWand"
+
+    def execute(self, image, **kwargs):
+        wand_img = to_wand_img(image)
+        if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+        apply_to_wand_seq(wand_img, 'smush', kwargs, type='whole')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Solarize:
@@ -1115,17 +1002,13 @@ class Solarize:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'solarize')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'solarize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Splice:
@@ -1140,17 +1023,13 @@ class Splice:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'splice')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'splice', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Spread:
@@ -1165,17 +1044,13 @@ class Spread:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'spread')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'spread', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Statistic:
@@ -1190,17 +1065,13 @@ class Statistic:
     CATEGORY = "MagickWand/Transformation"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'statistic')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'statistic', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Swirl:
@@ -1215,17 +1086,13 @@ class Swirl:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'swirl')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'swirl', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Threshold:
@@ -1240,17 +1107,13 @@ class Threshold:
     CATEGORY = "MagickWand/Threshold"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'threshold')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'threshold', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Thumbnail:
@@ -1265,17 +1128,13 @@ class Thumbnail:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'thumbnail')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'thumbnail', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Transform:
@@ -1290,17 +1149,13 @@ class Transform:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'transform')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'transform', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Transparentize:
@@ -1315,17 +1170,13 @@ class Transparentize:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'transparentize')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'transparentize', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Vignette:
@@ -1340,17 +1191,13 @@ class Vignette:
     CATEGORY = "MagickWand/Resizing and cropping"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'vignette')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'vignette', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 
 class Wave:
@@ -1365,17 +1212,13 @@ class Wave:
     CATEGORY = "MagickWand/Effects"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, 'wave')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, 'wave', kwargs, type='iterative')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 
 NODE_CLASS_MAPPINGS = {
     "ImageMagick Blur": Blur,
@@ -1385,6 +1228,7 @@ NODE_CLASS_MAPPINGS = {
     "ImageMagick Clahe": Clahe,
     "ImageMagick Clamp": Clamp,
     "ImageMagick Combine": Combine,
+    "ImageMagick Concat": Concat,
     "ImageMagick Contrast": Contrast,
     "ImageMagick Crop": Crop,
     "ImageMagick Decipher": Decipher,
@@ -1422,6 +1266,7 @@ NODE_CLASS_MAPPINGS = {
     "ImageMagick Sharpen": Sharpen,
     "ImageMagick Shave": Shave,
     "ImageMagick Sketch": Sketch,
+    "ImageMagick Smush": Smush,
     "ImageMagick Solarize": Solarize,
     "ImageMagick Splice": Splice,
     "ImageMagick Spread": Spread,

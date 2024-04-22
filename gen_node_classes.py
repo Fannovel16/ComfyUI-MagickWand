@@ -19,7 +19,7 @@ def gen_comfy_input_types(method_name, param_items):
             if type(default_value).__name__ in ['type', 'NoneType']:
                 default_value = 0
             if param in ['width', 'height', 'x_res', 'y_res']:
-                default_value = 128
+                default_value = 512
             type_config = {"default": default_value, "min": min, "max": 1024, "step": 0.01}
 
         elif param_type == "bool": 
@@ -33,7 +33,7 @@ def gen_comfy_input_types(method_name, param_items):
             if type(default_value).__name__ in ['type', 'NoneType']:
                 default_value = 0
             if param in ['width', 'height', 'x_res', 'y_res']:
-                default_value = 128
+                default_value = 512
                 min = 1
             # make kmeans and quantize working
             if param == "number_colors":
@@ -80,41 +80,37 @@ class {node_class_name}:
     CATEGORY = "{category}"
 
     def execute(self, image, **kwargs):
-        image_batch_np = image.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+        wand_img = to_wand_img(image)
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        out_images = []
-        for image in image_batch_np:
-            with Image.from_array(image) as img_wand:
-                getattr(img_wand, '{img_method}')(**kwargs)
-                out_images.append(HWC3(np.array(img_wand)))
-        out_images = np.stack(out_images)
-        out_images = torch.from_numpy(out_images.astype(np.float32) / 255.)
-        return (out_images,)
+        apply_to_wand_seq(wand_img, '{img_method}', kwargs, type='{apply_type}')
+        out = to_comfy_img(wand_img)
+        wand_img.close()
+        return (out, )
 """
 
-blacklist = ['pseudo', 'smash', 'concat', 'smush']
+apply_whole_methods = ['concat', 'smush', 'coalesce', 'combine', 'complex', 'merge_layers', 'polynomial', 'quantize']
 
 with open("nodes.py", 'w') as f:
     f.write("import numpy as np\n")
     f.write("from wand.image import Image\n")
     f.write("import torch\n")
-    f.write("from .utils import HWC3, remove_comments\n")
+    f.write("from .utils import *\n")
     img_wand = wand.image.Image(filename='rose:')
     for method_name, param_dict in wand_methods_dict.items():
-        if method_name in blacklist: continue
         node_class_name = method_name[0].upper()+method_name[1:]
         node_class_str = NODE_CLASS_TEMPLATE.format(
             node_class_name=node_class_name,
             comfy_input_types=gen_comfy_input_types(method_name, param_dict),
             img_method=method_name,
-            category=f"MagickWand/{method_category_dict[method_name]}" if method_name in method_category_dict else "MagickWand"
+            category=f"MagickWand/{method_category_dict[method_name]}" if method_name in method_category_dict else "MagickWand",
+            apply_type="whole" if method_name in apply_whole_methods else "iterative"
         )
         f.write(node_class_str + '\n')
 
     f.write("NODE_CLASS_MAPPINGS = {\n")
     for method_name in wand_methods_dict:
-        if method_name in blacklist: continue
+        if method_name == "pseudo": continue
         node_class_name = method_name[0].upper()+method_name[1:]
         f.write(' ' * 4)
         f.write(f'"ImageMagick {node_class_name}": {node_class_name},')

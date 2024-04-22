@@ -1,5 +1,7 @@
 import numpy as np
 import re
+from wand.image import Image
+import torch
 
 def HWC3(x):
     assert x.dtype == np.uint8
@@ -23,3 +25,33 @@ def remove_comments(string):
     pattern = r"#.*$"
     regex = re.compile(pattern, re.MULTILINE)
     return regex.sub("", string)
+
+def to_wand_img(comfy_img):
+    img_batch_np = comfy_img.cpu().detach().numpy().__mul__(255.).astype(np.uint8)
+    img_wand = Image()
+    for img_np in img_batch_np:
+        img_wand.sequence.append(Image.from_array(img_np))
+    return img_wand
+
+def apply_to_wand_seq(wand_img, method, method_kwargs, type="iterative"):
+    wand_img.iterator_reset()
+    if type == "iterative":
+        for sub_idx in range(len(wand_img.sequence)):
+            with wand_img.sequence[sub_idx] as frame:
+                getattr(frame, method)(**method_kwargs)
+    elif type == "whole":
+        getattr(wand_img, method)(**method_kwargs)
+        wand_img.sequence = wand_img.sequence[:1]
+    else:
+        raise NotImplementedError(type)
+    return wand_img
+
+def to_comfy_img(wand_img):
+    out_imgs = []
+    wand_img.iterator_reset()
+    for sub_idx in range(len(wand_img.sequence)):
+        frame = wand_img.sequence[sub_idx]
+        out_imgs.append(HWC3(np.array(frame)))
+    out_imgs = np.stack(out_imgs)
+    out_imgs = torch.from_numpy(out_imgs.astype(np.float32) / 255.)
+    return out_imgs

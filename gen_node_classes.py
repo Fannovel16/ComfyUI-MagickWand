@@ -97,6 +97,7 @@ with open("wand_methods.json", 'r') as f:
     wand_methods_dict = json.load(f)
 with open("method_category.json", 'r') as f:
     method_category_dict = json.load(f)
+    method_category_dict_copy = {**method_category_dict}
 
 NODE_CLASS_TEMPLATE = \
 """
@@ -160,6 +161,15 @@ with open("nodes.py", 'w') as f:
     for method_name, node_id in method_name_node_id.items():
         print(method_name, ':', node_id.replace(' ', '') + "Image")
     print('\n' * 4)
+    
     print("Markdown")
+    category_markdown = {}
     for method_name, node_id in method_name_node_id.items():
-        print(f"* ImageMagick {node_id}: [{method_name}](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.{method_name})")
+        category = method_category_dict_copy[method_name]
+        if category not in category_markdown:
+            category_markdown[category] = ''
+        category_markdown[category] += \
+            f"* ImageMagick {node_id}: [{method_name}](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.{method_name}) \n"
+    for category, markdown in category_markdown.items():
+        print(f'### {category}')
+        print(markdown)

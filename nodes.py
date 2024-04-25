@@ -87,7 +87,7 @@ class AdaptiveThreshold:
     FUNCTION = "execute"
     DESCRIPTION = Image.adaptive_threshold.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -187,7 +187,7 @@ class AutoThreshold:
     FUNCTION = "execute"
     DESCRIPTION = Image.auto_threshold.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -312,7 +312,7 @@ class Charcoal:
     FUNCTION = "execute"
     DESCRIPTION = Image.charcoal.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Feature"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -387,7 +387,7 @@ class Clamp:
     FUNCTION = "execute"
     DESCRIPTION = Image.clamp.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -462,7 +462,7 @@ class ColorMatrix:
     FUNCTION = "execute"
     DESCRIPTION = Image.color_matrix.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Color Matrix"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -512,7 +512,7 @@ class Concat:
     FUNCTION = "execute"
     DESCRIPTION = Image.concat.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -612,7 +612,7 @@ class CycleColorMap:
     FUNCTION = "execute"
     DESCRIPTION = Image.cycle_color_map.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Cycle Color Map"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1062,7 +1062,7 @@ class Implode:
     FUNCTION = "execute"
     DESCRIPTION = Image.implode.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1312,7 +1312,7 @@ class MergeLayers:
     FUNCTION = "execute"
     DESCRIPTION = Image.merge_layers.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1337,7 +1337,7 @@ class Mode:
     FUNCTION = "execute"
     DESCRIPTION = Image.mode.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Statistic"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1437,7 +1437,7 @@ class Negate:
     FUNCTION = "execute"
     DESCRIPTION = Image.negate.__doc__
 
-    CATEGORY = "MagickWand/Enhance"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1462,7 +1462,7 @@ class Noise:
     FUNCTION = "execute"
     DESCRIPTION = Image.noise.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1537,7 +1537,7 @@ class OrderedDither:
     FUNCTION = "execute"
     DESCRIPTION = Image.ordered_dither.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Dither"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1637,7 +1637,7 @@ class RandomThreshold:
     FUNCTION = "execute"
     DESCRIPTION = Image.random_threshold.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1662,7 +1662,7 @@ class RangeThreshold:
     FUNCTION = "execute"
     DESCRIPTION = Image.range_threshold.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1862,7 +1862,7 @@ class SepiaTone:
     FUNCTION = "execute"
     DESCRIPTION = Image.sepia_tone.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1912,7 +1912,7 @@ class Shadow:
     FUNCTION = "execute"
     DESCRIPTION = Image.shadow.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1937,7 +1937,7 @@ class Sharpen:
     FUNCTION = "execute"
     DESCRIPTION = Image.sharpen.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2012,7 +2012,7 @@ class Sketch:
     FUNCTION = "execute"
     DESCRIPTION = Image.sketch.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2037,7 +2037,7 @@ class Smush:
     FUNCTION = "execute"
     DESCRIPTION = Image.smush.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2062,7 +2062,7 @@ class Solarize:
     FUNCTION = "execute"
     DESCRIPTION = Image.solarize.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2162,7 +2162,7 @@ class Swirl:
     FUNCTION = "execute"
     DESCRIPTION = Image.swirl.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Statistic"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2187,7 +2187,7 @@ class Threshold:
     FUNCTION = "execute"
     DESCRIPTION = Image.threshold.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2387,7 +2387,7 @@ class Vignette:
     FUNCTION = "execute"
     DESCRIPTION = Image.vignette.__doc__
 
-    CATEGORY = "MagickWand/Image++"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2478,3 +2478,103 @@ class WhiteBalance:
         return (out, )
 
 NODE_CLASS_MAPPINGS = {
+    "ImageMagick Adaptive Blur": AdaptiveBlur,
+    "ImageMagick Adaptive Resize": AdaptiveResize,
+    "ImageMagick Adaptive Sharpen": AdaptiveSharpen,
+    "ImageMagick Adaptive Threshold": AdaptiveThreshold,
+    "ImageMagick Auto Gamma": AutoGamma,
+    "ImageMagick Auto Level": AutoLevel,
+    "ImageMagick Auto Orient": AutoOrient,
+    "ImageMagick Auto Threshold": AutoThreshold,
+    "ImageMagick Blue Shift": BlueShift,
+    "ImageMagick Blur": Blur,
+    "ImageMagick Brightness Contrast": BrightnessContrast,
+    "ImageMagick Canny": Canny,
+    "ImageMagick Charcoal": Charcoal,
+    "ImageMagick Chop": Chop,
+    "ImageMagick Clahe": Clahe,
+    "ImageMagick Clamp": Clamp,
+    "ImageMagick Coalesce": Coalesce,
+    "ImageMagick Color Decision List": ColorDecisionList,
+    "ImageMagick Color Matrix": ColorMatrix,
+    "ImageMagick Combine": Combine,
+    "ImageMagick Concat": Concat,
+    "ImageMagick Contrast": Contrast,
+    "ImageMagick Contrast Stretch": ContrastStretch,
+    "ImageMagick Crop": Crop,
+    "ImageMagick Cycle Color Map": CycleColorMap,
+    "ImageMagick Decipher": Decipher,
+    "ImageMagick Despeckle": Despeckle,
+    "ImageMagick Distort": Distort,
+    "ImageMagick Edge": Edge,
+    "ImageMagick Emboss": Emboss,
+    "ImageMagick Encipher": Encipher,
+    "ImageMagick Enhance": Enhance,
+    "ImageMagick Equalize": Equalize,
+    "ImageMagick Evaluate": Evaluate,
+    "ImageMagick Extent": Extent,
+    "ImageMagick Flip": Flip,
+    "ImageMagick Flop": Flop,
+    "ImageMagick Forward Fourier Transform": ForwardFourierTransform,
+    "ImageMagick Function": Function,
+    "ImageMagick Gamma": Gamma,
+    "ImageMagick Gaussian Blur": GaussianBlur,
+    "ImageMagick Hough Lines": HoughLines,
+    "ImageMagick Implode": Implode,
+    "ImageMagick Kmeans": Kmeans,
+    "ImageMagick Kuwahara": Kuwahara,
+    "ImageMagick Level": Level,
+    "ImageMagick Levelize": Levelize,
+    "ImageMagick Linear Stretch": LinearStretch,
+    "ImageMagick Liquid Rescale": LiquidRescale,
+    "ImageMagick Local Contrast": LocalContrast,
+    "ImageMagick Magnify": Magnify,
+    "ImageMagick Mean Shift": MeanShift,
+    "ImageMagick Merge Layers": MergeLayers,
+    "ImageMagick Mode": Mode,
+    "ImageMagick Modulate": Modulate,
+    "ImageMagick Morphology": Morphology,
+    "ImageMagick Motion Blur": MotionBlur,
+    "ImageMagick Negate": Negate,
+    "ImageMagick Noise": Noise,
+    "ImageMagick Normalize": Normalize,
+    "ImageMagick Oil Paint": OilPaint,
+    "ImageMagick Ordered Dither": OrderedDither,
+    "ImageMagick Polynomial": Polynomial,
+    "ImageMagick Posterize": Posterize,
+    "ImageMagick Quantize": Quantize,
+    "ImageMagick Random Threshold": RandomThreshold,
+    "ImageMagick Range Threshold": RangeThreshold,
+    "ImageMagick Resample": Resample,
+    "ImageMagick Resize": Resize,
+    "ImageMagick Roll": Roll,
+    "ImageMagick Rotational Blur": RotationalBlur,
+    "ImageMagick Sample": Sample,
+    "ImageMagick Scale": Scale,
+    "ImageMagick Selective Blur": SelectiveBlur,
+    "ImageMagick Sepia Tone": SepiaTone,
+    "ImageMagick Shade": Shade,
+    "ImageMagick Shadow": Shadow,
+    "ImageMagick Sharpen": Sharpen,
+    "ImageMagick Shave": Shave,
+    "ImageMagick Sigmoidal Contrast": SigmoidalContrast,
+    "ImageMagick Sketch": Sketch,
+    "ImageMagick Smush": Smush,
+    "ImageMagick Solarize": Solarize,
+    "ImageMagick Splice": Splice,
+    "ImageMagick Spread": Spread,
+    "ImageMagick Statistic": Statistic,
+    "ImageMagick Swirl": Swirl,
+    "ImageMagick Threshold": Threshold,
+    "ImageMagick Thumbnail": Thumbnail,
+    "ImageMagick Transform": Transform,
+    "ImageMagick Transform Colorspace": TransformColorspace,
+    "ImageMagick Transparentize": Transparentize,
+    "ImageMagick Transpose": Transpose,
+    "ImageMagick Transverse": Transverse,
+    "ImageMagick Unsharp Mask": UnsharpMask,
+    "ImageMagick Vignette": Vignette,
+    "ImageMagick Wave": Wave,
+    "ImageMagick Wavelet Denoise": WaveletDenoise,
+    "ImageMagick White Balance": WhiteBalance,
+}

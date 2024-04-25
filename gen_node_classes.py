@@ -2,6 +2,27 @@ import json
 import wand.image
 import inspect
 
+CCC_DEFAULT_VALUE = \
+"""<ColorCorrectionCollection xmlns="urn:ASC:CDL:v1.2">
+    <ColorCorrection id="cc03345">
+        <SOPNode>
+            <Slope> 0.9 1.2 0.5 </Slope>
+            <Offset> 0.4 -0.5 0.6 </Offset>
+            <Power> 1.0 0.8 1.5 </Power>
+        </SOPNode>
+        <SATNode>
+            <Saturation> 0.85 </Saturation>
+        </SATNode>
+    </ColorCorrection>
+</ColorCorrectionCollection>"""
+
+MATRIX_DEFAULT_VALUE = \
+"""[
+    [1.0, 0.0, 0.0],
+    [0.0, 1.0, 0.0],
+    [0.0, 0.0, 1.0],
+]"""
+
 def gen_comfy_input_types(method_name, param_items):
     img = wand.image.Image(filename='rose:')
     input_types = {"image": ("IMAGE",)}
@@ -52,7 +73,7 @@ def gen_comfy_input_types(method_name, param_items):
             type_config = {"default": default_value, "min": min, "max": 1024}
 
         elif (param_type == "basestring") or (param_type == "floats"): 
-            input_type = "STRING"
+            input_type, multiline = "STRING", False
             if type(default_value).__name__ in ['type', 'NoneType']:
                 default_value = ''
             if param == "arguments": 
@@ -61,29 +82,12 @@ def gen_comfy_input_types(method_name, param_items):
                 else:
                     default_value = '0.5, 1.0'
             if param == "ccc":
-                default_value = """
-                    <ColorCorrectionCollection xmlns="urn:ASC:CDL:v1.2">
-                        <ColorCorrection id="cc03345">
-                            <SOPNode>
-                                <Slope> 0.9 1.2 0.5 </Slope>
-                                <Offset> 0.4 -0.5 0.6 </Offset>
-                                <Power> 1.0 0.8 1.5 </Power>
-                            </SOPNode>
-                            <SATNode>
-                                <Saturation> 0.85 </Saturation>
-                            </SATNode>
-                        </ColorCorrection>
-                    </ColorCorrectionCollection>
-                """
+                multiline = True
+                default_value = CCC_DEFAULT_VALUE
             if param == "matrix":
-                default_value = json.dumps(
-                    [
-                        [1.0, 0.0, 0.0],
-                        [0.0, 1.0, 0.0],
-                        [0.0, 0.0, 1.0],
-                    ]
-                )
-            type_config = {"multiline": True, "default": default_value}
+                multiline = True
+                default_value = MATRIX_DEFAULT_VALUE
+            type_config = {"multiline": multiline, "default": default_value}
         assert input_type, param_type
         input_types[param] = (input_type, type_config)
     img.close()
@@ -112,8 +116,8 @@ class {node_class_name}:
         if "arguments" in kwargs:
             kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
         if "matrix" in kwargs:
-            import ast
-            list_of_lists = ast.literal_eval(kwargs["matrix"])
+            import json
+            list_of_lists = json.loads(kwargs["matrix"])
             kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
         apply_to_wand_seq(wand_img, '{img_method}', kwargs, type='{apply_type}')
         out = to_comfy_img(wand_img)
@@ -138,14 +142,24 @@ with open("nodes.py", 'w') as f:
             category=f"MagickWand/{method_category_dict[method_name]}" if method_name in method_category_dict else "MagickWand",
             apply_type="whole" if method_name in apply_whole_methods else "iterative"
         )
+        del method_category_dict[method_name]
         f.write(node_class_str + '\n')
-
     f.write("NODE_CLASS_MAPPINGS = {\n")
+    assert not method_category_dict, f"Redundant in method category: {method_category_dict}"
+    method_name_node_id = {}
     for method_name in wand_methods_dict:
         node_id = ' '.join([name_part[0].upper() + name_part[1:] for name_part in method_name.split('_')])
         node_class_name = ''.join([name_part[0].upper() + name_part[1:] for name_part in method_name.split('_')])
         f.write(' ' * 4)
         f.write(f'"ImageMagick {node_id}": {node_class_name},')
         f.write('\n')
-        print(f"* ImageMagick {node_id}: [{method_name}](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.{method_name})")
+        method_name_node_id[method_name] = node_id
     f.write('}\n')
+
+    print("Method name - Node ID")
+    for method_name, node_id in method_name_node_id.items():
+        print(method_name, ':', node_id.replace(' ', '') + "Image")
+    print('\n' * 4)
+    print("Markdown")
+    for method_name, node_id in method_name_node_id.items():
+        print(f"* ImageMagick {node_id}: [{method_name}](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.{method_name})")

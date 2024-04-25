@@ -437,7 +437,7 @@ class ColorDecisionList:
     FUNCTION = "execute"
     DESCRIPTION = Image.color_decision_list.__doc__
 
-    CATEGORY = "MagickWand/Enhance"
+    CATEGORY = "MagickWand/Color Matrix & Decision List"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -462,7 +462,7 @@ class ColorMatrix:
     FUNCTION = "execute"
     DESCRIPTION = Image.color_matrix.__doc__
 
-    CATEGORY = "MagickWand/Color Matrix"
+    CATEGORY = "MagickWand/Color Matrix & Decision List"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -487,7 +487,7 @@ class Combine:
     FUNCTION = "execute"
     DESCRIPTION = Image.combine.__doc__
 
-    CATEGORY = "MagickWand/Compose"
+    CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -612,7 +612,7 @@ class CycleColorMap:
     FUNCTION = "execute"
     DESCRIPTION = Image.cycle_color_map.__doc__
 
-    CATEGORY = "MagickWand/Cycle Color Map"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -662,7 +662,7 @@ class Despeckle:
     FUNCTION = "execute"
     DESCRIPTION = Image.despeckle.__doc__
 
-    CATEGORY = "MagickWand/Effect"
+    CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -687,7 +687,7 @@ class Distort:
     FUNCTION = "execute"
     DESCRIPTION = Image.distort.__doc__
 
-    CATEGORY = "MagickWand/Distort"
+    CATEGORY = "MagickWand/Morphology"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -712,7 +712,7 @@ class Edge:
     FUNCTION = "execute"
     DESCRIPTION = Image.edge.__doc__
 
-    CATEGORY = "MagickWand/Effect"
+    CATEGORY = "MagickWand/Feature"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -987,7 +987,7 @@ class Gamma:
     FUNCTION = "execute"
     DESCRIPTION = Image.gamma.__doc__
 
-    CATEGORY = "MagickWand/encipher"
+    CATEGORY = "MagickWand/Enchance"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1112,7 +1112,7 @@ class Kuwahara:
     FUNCTION = "execute"
     DESCRIPTION = Image.kuwahara.__doc__
 
-    CATEGORY = "MagickWand/Effect"
+    CATEGORY = "MagickWand/Enchance"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1512,7 +1512,7 @@ class OilPaint:
     FUNCTION = "execute"
     DESCRIPTION = Image.oil_paint.__doc__
 
-    CATEGORY = "MagickWand/Paint"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1537,7 +1537,7 @@ class OrderedDither:
     FUNCTION = "execute"
     DESCRIPTION = Image.ordered_dither.__doc__
 
-    CATEGORY = "MagickWand/Dither"
+    CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2062,7 +2062,7 @@ class Solarize:
     FUNCTION = "execute"
     DESCRIPTION = Image.solarize.__doc__
 
-    CATEGORY = "MagickWand/Thresold"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2162,7 +2162,7 @@ class Swirl:
     FUNCTION = "execute"
     DESCRIPTION = Image.swirl.__doc__
 
-    CATEGORY = "MagickWand/Statistic"
+    CATEGORY = "MagickWand/Morphology"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -2362,7 +2362,7 @@ class UnsharpMask:
     FUNCTION = "execute"
     DESCRIPTION = Image.unsharp_mask.__doc__
 
-    CATEGORY = "MagickWand/Transform"
+    CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)

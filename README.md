@@ -48,27 +48,28 @@ pip install -r requirements.txt
 ```
 ## Supported methods (99)
 ### Effect
-* ImageMagick Adaptive Blur: [adaptive_blur](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.adaptive_blur) 
+* ImageMagick Adaptive Blur: [adaptive_blur](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.adaptive_blur)
 * ImageMagick Adaptive Sharpen: [adaptive_sharpen](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.adaptive_sharpen)
 * ImageMagick Blue Shift: [blue_shift](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.blue_shift)
 * ImageMagick Blur: [blur](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.blur)
-* ImageMagick Despeckle: [despeckle](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.despeckle)
-* ImageMagick Edge: [edge](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.edge)
+* ImageMagick Cycle Color Map: [cycle_color_map](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.cycle_color_map)
 * ImageMagick Emboss: [emboss](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.emboss)
 * ImageMagick Gaussian Blur: [gaussian_blur](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.gaussian_blur)
 * ImageMagick Implode: [implode](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.implode)
-* ImageMagick Kuwahara: [kuwahara](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.kuwahara)
 * ImageMagick Local Contrast: [local_contrast](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.local_contrast)
 * ImageMagick Motion Blur: [motion_blur](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.motion_blur)
 * ImageMagick Negate: [negate](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.negate)
 * ImageMagick Noise: [noise](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.noise)
+* ImageMagick Oil Paint: [oil_paint](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.oil_paint)
 * ImageMagick Rotational Blur: [rotational_blur](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.rotational_blur)
 * ImageMagick Selective Blur: [selective_blur](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.selective_blur)
 * ImageMagick Sepia Tone: [sepia_tone](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.sepia_tone)
 * ImageMagick Shade: [shade](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.shade)
 * ImageMagick Shadow: [shadow](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.shadow)
 * ImageMagick Sketch: [sketch](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.sketch)
+* ImageMagick Solarize: [solarize](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.solarize)
 * ImageMagick Transparentize: [transparentize](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.transparentize)
+* ImageMagick Unsharp Mask: [unsharp_mask](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.unsharp_mask)
 * ImageMagick Vignette: [vignette](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.vignette)
 * ImageMagick Wave: [wave](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.wave)
 * ImageMagick Wavelet Denoise: [wavelet_denoise](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.wavelet_denoise)
@@ -88,7 +89,6 @@ pip install -r requirements.txt
 * ImageMagick Auto Threshold: [auto_threshold](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.auto_threshold)
 * ImageMagick Random Threshold: [random_threshold](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.random_threshold)
 * ImageMagick Range Threshold: [range_threshold](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.range_threshold)
-* ImageMagick Solarize: [solarize](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.solarize)
 * ImageMagick Threshold: [threshold](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.threshold)
 
 ### Enhance
@@ -96,9 +96,9 @@ pip install -r requirements.txt
 * ImageMagick Auto Level: [auto_level](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.auto_level)
 * ImageMagick Brightness Contrast: [brightness_contrast](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.brightness_contrast)
 * ImageMagick Clahe: [clahe](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.clahe)
-* ImageMagick Color Decision List: [color_decision_list](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.color_decision_list)
 * ImageMagick Contrast: [contrast](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.contrast)
 * ImageMagick Contrast Stretch: [contrast_stretch](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.contrast_stretch)
+* ImageMagick Despeckle: [despeckle](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.despeckle)
 * ImageMagick Enhance: [enhance](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.enhance)
 * ImageMagick Level: [level](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.level)
 * ImageMagick Levelize: [levelize](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.levelize)
@@ -112,6 +112,7 @@ pip install -r requirements.txt
 ### Transform
 * ImageMagick Auto Orient: [auto_orient](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.auto_orient)
 * ImageMagick Chop: [chop](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.chop)
+* ImageMagick Combine: [combine](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.combine)
 * ImageMagick Concat: [concat](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.concat)
 * ImageMagick Crop: [crop](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.crop)
 * ImageMagick Extent: [extent](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.extent)
@@ -127,38 +128,36 @@ pip install -r requirements.txt
 * ImageMagick Transform Colorspace: [transform_colorspace](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.transform_colorspace)
 * ImageMagick Transpose: [transpose](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.transpose)
 * ImageMagick Transverse: [transverse](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.transverse)
-* ImageMagick Unsharp Mask: [unsharp_mask](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.unsharp_mask)
 
 ### Feature
 * ImageMagick Canny: [canny](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.canny)
 * ImageMagick Charcoal: [charcoal](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.charcoal)
+* ImageMagick Edge: [edge](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.edge)
 * ImageMagick Hough Lines: [hough_lines](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.hough_lines)
 * ImageMagick Mean Shift: [mean_shift](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.mean_shift)
 
 ### Quantize
 * ImageMagick Clamp: [clamp](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.clamp)
 * ImageMagick Kmeans: [kmeans](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.kmeans)
+* ImageMagick Ordered Dither: [ordered_dither](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.ordered_dither)
 * ImageMagick Posterize: [posterize](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.posterize)
 * ImageMagick Quantize: [quantize](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.quantize)
 
 ### Layer
 * ImageMagick Coalesce: [coalesce](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.coalesce)
 
-### Color Matrix
+### Color Matrix & Decision List
+* ImageMagick Color Decision List: [color_decision_list](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.color_decision_list)
 * ImageMagick Color Matrix: [color_matrix](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.color_matrix)
-
-### Compose
-* ImageMagick Combine: [combine](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.combine)
-
-### Cycle Color Map
-* ImageMagick Cycle Color Map: [cycle_color_map](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.cycle_color_map)
 
 ### Cipher
 * ImageMagick Decipher: [decipher](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.decipher)
 * ImageMagick Encipher: [encipher](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.encipher)
 
-### Distort
+### Morphology
 * ImageMagick Distort: [distort](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.distort)
+* ImageMagick Morphology: [morphology](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.morphology)
+* ImageMagick Swirl: [swirl](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.swirl)
 
 ### Equalize
 * ImageMagick Equalize: [equalize](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.equalize)
@@ -169,19 +168,10 @@ pip install -r requirements.txt
 * ImageMagick Mode: [mode](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.mode)
 * ImageMagick Polynomial: [polynomial](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.polynomial)
 * ImageMagick Statistic: [statistic](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.statistic)
-* ImageMagick Swirl: [swirl](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.swirl)
 
 ### Fourier
 * ImageMagick Forward Fourier Transform: [forward_fourier_transform](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.forward_fourier_transform)
 
-### encipher
+### Enchance
 * ImageMagick Gamma: [gamma](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.gamma)
-
-### Morphology
-* ImageMagick Morphology: [morphology](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.morphology)
-
-### Paint
-* ImageMagick Oil Paint: [oil_paint](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.oil_paint)
-
-### Dither
-* ImageMagick Ordered Dither: [ordered_dither](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.ordered_dither)
+* ImageMagick Kuwahara: [kuwahara](https://docs.wand-py.org/en/0.6.12/wand/image.html#wand.image.BaseImage.kuwahara)

@@ -412,7 +412,7 @@ class Coalesce:
     FUNCTION = "execute"
     DESCRIPTION = Image.coalesce.__doc__
 
-    CATEGORY = "MagickWand/Layer"
+    CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -812,7 +812,7 @@ class Equalize:
     FUNCTION = "execute"
     DESCRIPTION = Image.equalize.__doc__
 
-    CATEGORY = "MagickWand/Equalize"
+    CATEGORY = "MagickWand/Statistic"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -987,7 +987,7 @@ class Gamma:
     FUNCTION = "execute"
     DESCRIPTION = Image.gamma.__doc__
 
-    CATEGORY = "MagickWand/Enchance"
+    CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
@@ -1112,7 +1112,7 @@ class Kuwahara:
     FUNCTION = "execute"
     DESCRIPTION = Image.kuwahara.__doc__
 
-    CATEGORY = "MagickWand/Enchance"
+    CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)

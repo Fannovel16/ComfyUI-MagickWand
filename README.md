@@ -3,7 +3,7 @@ Proper implementation of ImageMagick - the famous software suite for editing and
 
 Batch value is also supported (i.e. from Batch Value Schedule, Spline Editor, etc)
 
-[](./example_schedule.gif)
+![](./example_schedule.gif)
 
 ## Example workflow
 * [magickwand_playground.json](./magickwand_playground.json)

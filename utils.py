@@ -3,6 +3,7 @@ import re
 from wand.image import Image
 import torch
 import numbers
+import json
 
 def HWC3(x):
     assert x.dtype == np.uint8
@@ -61,3 +62,11 @@ def to_comfy_img(wand_img):
     out_imgs = np.stack(out_imgs)
     out_imgs = torch.from_numpy(out_imgs.astype(np.float32) / 255.)
     return out_imgs
+
+def preprocess_kwargs(**kwargs):
+    if "arguments" in kwargs:
+            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
+    if "matrix" in kwargs:
+        list_of_lists = json.loads(kwargs["matrix"])
+        kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+    return kwargs

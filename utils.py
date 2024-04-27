@@ -35,14 +35,21 @@ def to_wand_img(comfy_img):
         img_wand.sequence.append(Image.from_array(img_np))
     return img_wand
 
-def check_iterable(key, value):
-    return key != "arguments" and hasattr(value, '__getitem__') and isinstance(value[0], numbers.Number) 
+def check_iterable(key, value, idx=0):
+    return key != "arguments" and hasattr(value, '__getitem__') and isinstance(value[0], numbers.Number)
+
+def safe_index(list, value):
+    return list[value] if value < len(list) else list[-1]
 
 def apply_to_wand_seq(wand_img, method, method_kwargs, type="iterative"):
     wand_img.iterator_reset()
     if type == "iterative":
         for sub_idx in range(len(wand_img.sequence)):
-            _kwargs = {key: value[sub_idx] if check_iterable(key, value) else value for key, value in method_kwargs.items()}
+            _kwargs = {
+                key: safe_index(value, sub_idx)
+                    if check_iterable(key, value) else value
+                    for key, value in method_kwargs.items()
+            }
             with wand_img.sequence[sub_idx] as frame:
                 getattr(frame, method)(**_kwargs)
     elif type == "whole":

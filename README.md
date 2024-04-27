@@ -1,5 +1,10 @@
 # ComfyUI MagickWand
 Proper implementation of ImageMagick - the famous software suite for editing and manipulating digital images to ComfyUI using [wandpy](https://github.com/emcconville/wand)
+
+Batch value is also supported (i.e. from Batch Value Schedule, Spline Editor, etc)
+
+[](./example_schedule.gif)
+
 ## Example workflow
 * [magickwand_playground.json](./magickwand_playground.json)
 * [Input image 1](./000002.jpg), [Input image 2](./015316.jpg)

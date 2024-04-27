@@ -114,12 +114,7 @@ class {node_class_name}:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, '{img_method}', kwargs, type='{apply_type}')
         out = to_comfy_img(wand_img)
         wand_img.close()

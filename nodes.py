@@ -16,12 +16,7 @@ class AdaptiveBlur:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'adaptive_blur', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -41,12 +36,7 @@ class AdaptiveResize:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'adaptive_resize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -66,12 +56,7 @@ class AdaptiveSharpen:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'adaptive_sharpen', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -91,12 +76,7 @@ class AdaptiveThreshold:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'adaptive_threshold', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -116,12 +96,7 @@ class AutoGamma:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'auto_gamma', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -141,12 +116,7 @@ class AutoLevel:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'auto_level', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -166,12 +136,7 @@ class AutoOrient:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'auto_orient', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -191,12 +156,7 @@ class AutoThreshold:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'auto_threshold', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -216,12 +176,7 @@ class BlueShift:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'blue_shift', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -241,12 +196,7 @@ class Blur:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'blur', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -266,12 +216,7 @@ class BrightnessContrast:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'brightness_contrast', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -291,12 +236,7 @@ class Canny:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'canny', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -316,12 +256,7 @@ class Charcoal:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'charcoal', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -341,12 +276,7 @@ class Chop:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'chop', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -366,12 +296,7 @@ class Clahe:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'clahe', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -391,12 +316,7 @@ class Clamp:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'clamp', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -416,12 +336,7 @@ class Coalesce:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'coalesce', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -441,12 +356,7 @@ class ColorDecisionList:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'color_decision_list', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -466,12 +376,7 @@ class ColorMatrix:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'color_matrix', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -491,12 +396,7 @@ class Combine:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'combine', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -516,12 +416,7 @@ class Concat:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'concat', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -541,12 +436,7 @@ class Contrast:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'contrast', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -566,12 +456,7 @@ class ContrastStretch:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'contrast_stretch', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -591,12 +476,7 @@ class Crop:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'crop', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -616,12 +496,7 @@ class CycleColorMap:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'cycle_color_map', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -641,12 +516,7 @@ class Decipher:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'decipher', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -666,12 +536,7 @@ class Despeckle:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'despeckle', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -691,12 +556,7 @@ class Distort:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'distort', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -716,12 +576,7 @@ class Edge:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'edge', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -741,12 +596,7 @@ class Emboss:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'emboss', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -766,12 +616,7 @@ class Encipher:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'encipher', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -791,12 +636,7 @@ class Enhance:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'enhance', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -816,12 +656,7 @@ class Equalize:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'equalize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -841,12 +676,7 @@ class Evaluate:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'evaluate', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -866,12 +696,7 @@ class Extent:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'extent', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -891,12 +716,7 @@ class Flip:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'flip', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -916,12 +736,7 @@ class Flop:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'flop', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -941,12 +756,7 @@ class ForwardFourierTransform:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'forward_fourier_transform', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -966,12 +776,7 @@ class Function:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'function', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -991,12 +796,7 @@ class Gamma:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'gamma', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1016,12 +816,7 @@ class GaussianBlur:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'gaussian_blur', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1041,12 +836,7 @@ class HoughLines:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'hough_lines', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1066,12 +856,7 @@ class Implode:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'implode', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1091,12 +876,7 @@ class Kmeans:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'kmeans', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1116,12 +896,7 @@ class Kuwahara:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'kuwahara', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1141,12 +916,7 @@ class Level:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'level', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1166,12 +936,7 @@ class Levelize:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'levelize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1191,12 +956,7 @@ class LinearStretch:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'linear_stretch', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1216,12 +976,7 @@ class LiquidRescale:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'liquid_rescale', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1241,12 +996,7 @@ class LocalContrast:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'local_contrast', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1266,12 +1016,7 @@ class Magnify:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'magnify', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1291,12 +1036,7 @@ class MeanShift:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'mean_shift', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1316,12 +1056,7 @@ class MergeLayers:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'merge_layers', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1341,12 +1076,7 @@ class Mode:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'mode', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1366,12 +1096,7 @@ class Modulate:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'modulate', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1391,12 +1116,7 @@ class Morphology:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'morphology', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1416,12 +1136,7 @@ class MotionBlur:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'motion_blur', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1441,12 +1156,7 @@ class Negate:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'negate', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1466,12 +1176,7 @@ class Noise:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'noise', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1491,12 +1196,7 @@ class Normalize:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'normalize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1516,12 +1216,7 @@ class OilPaint:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'oil_paint', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1541,12 +1236,7 @@ class OrderedDither:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'ordered_dither', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1566,12 +1256,7 @@ class Polynomial:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'polynomial', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1591,12 +1276,7 @@ class Posterize:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'posterize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1616,12 +1296,7 @@ class Quantize:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'quantize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1641,12 +1316,7 @@ class RandomThreshold:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'random_threshold', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1666,12 +1336,7 @@ class RangeThreshold:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'range_threshold', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1691,12 +1356,7 @@ class Resample:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'resample', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1716,12 +1376,7 @@ class Resize:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'resize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1741,12 +1396,7 @@ class Roll:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'roll', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1766,12 +1416,7 @@ class RotationalBlur:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'rotational_blur', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1791,12 +1436,7 @@ class Sample:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'sample', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1816,12 +1456,7 @@ class Scale:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'scale', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1841,12 +1476,7 @@ class SelectiveBlur:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'selective_blur', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1866,12 +1496,7 @@ class SepiaTone:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'sepia_tone', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1891,12 +1516,7 @@ class Shade:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'shade', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1916,12 +1536,7 @@ class Shadow:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'shadow', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1941,12 +1556,7 @@ class Sharpen:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'sharpen', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1966,12 +1576,7 @@ class Shave:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'shave', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -1991,12 +1596,7 @@ class SigmoidalContrast:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'sigmoidal_contrast', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2016,12 +1616,7 @@ class Sketch:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'sketch', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2041,12 +1636,7 @@ class Smush:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'smush', kwargs, type='whole')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2066,12 +1656,7 @@ class Solarize:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'solarize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2091,12 +1676,7 @@ class Splice:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'splice', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2116,12 +1696,7 @@ class Spread:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'spread', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2141,12 +1716,7 @@ class Statistic:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'statistic', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2166,12 +1736,7 @@ class Swirl:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'swirl', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2191,12 +1756,7 @@ class Threshold:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'threshold', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2216,12 +1776,7 @@ class Thumbnail:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'thumbnail', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2241,12 +1796,7 @@ class Transform:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'transform', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2266,12 +1816,7 @@ class TransformColorspace:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'transform_colorspace', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2291,12 +1836,7 @@ class Transparentize:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'transparentize', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2316,12 +1856,7 @@ class Transpose:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'transpose', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2341,12 +1876,7 @@ class Transverse:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'transverse', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2366,12 +1896,7 @@ class UnsharpMask:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'unsharp_mask', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2391,12 +1916,7 @@ class Vignette:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'vignette', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2416,12 +1936,7 @@ class Wave:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'wave', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2441,12 +1956,7 @@ class WaveletDenoise:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'wavelet_denoise', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()
@@ -2466,12 +1976,7 @@ class WhiteBalance:
 
     def execute(self, image, **kwargs):
         wand_img = to_wand_img(image)
-        if "arguments" in kwargs:
-            kwargs["arguments"] = [float(x.strip()) for x in remove_comments(kwargs["arguments"]).split(',') if x.strip()]
-        if "matrix" in kwargs:
-            import json
-            list_of_lists = json.loads(kwargs["matrix"])
-            kwargs["matrix"] = [[float(element) for element in sublist] for sublist in list_of_lists]
+        kwargs = preprocess_kwargs(**kwargs)
         apply_to_wand_seq(wand_img, 'white_balance', kwargs, type='iterative')
         out = to_comfy_img(wand_img)
         wand_img.close()

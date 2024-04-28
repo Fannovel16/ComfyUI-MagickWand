@@ -53,7 +53,7 @@ def apply_to_wand_seq(wand_img, method, method_kwargs, type="iterative"):
             with wand_img.sequence[sub_idx] as frame:
                 getattr(frame, method)(**_kwargs)
     elif type == "whole":
-        _kwargs = {key: value[0] if check_iterable(value) else value for key, value in method_kwargs.items()}
+        _kwargs = {key: value[0] if check_iterable(key, value) else value for key, value in method_kwargs.items()}
         getattr(wand_img, method)(**_kwargs)
         wand_img.sequence = wand_img.sequence[:1]
     else:

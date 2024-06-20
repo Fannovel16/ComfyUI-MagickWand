@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-magickwand"
+description = "Proper implementation of ImageMagick - the famous software suite for editing and manipulating digital images to ComfyUI using [wandpy](https://github.com/emcconville/wand)"
+version = "1.0.0"
+license = "LICENSE"
+dependencies = ["Wand"]
+
+[project.urls]
+Repository = "https://github.com/Fannovel16/ComfyUI-MagickWand"
+
+[tool.comfy]
+PublisherId = "fannovel16"
+DisplayName = "ComfyUI-MagickWand"
+Icon = ""
+Models = [{location = "/checkpoints/model.safetensor", model_url = "https://example.com/model.zip"}]

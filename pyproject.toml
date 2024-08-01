@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-magickwand"
 description = "Proper implementation of ImageMagick - the famous software suite for editing and manipulating digital images to ComfyUI using [wandpy](https://github.com/emcconville/wand)"
-version = "1.0.0"
+version = "1.0.1"
 license = { file = "LICENSE" }
 dependencies = ["Wand"]
 

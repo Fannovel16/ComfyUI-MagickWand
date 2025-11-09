@@ -15,12 +15,7 @@ class AdaptiveBlur:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'adaptive_blur', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'adaptive_blur', kwargs, apply_type='iterative')
 
 
 class AdaptiveResize:
@@ -35,12 +30,7 @@ class AdaptiveResize:
     CATEGORY = "MagickWand/Resize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'adaptive_resize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'adaptive_resize', kwargs, apply_type='iterative')
 
 
 class AdaptiveSharpen:
@@ -55,12 +45,7 @@ class AdaptiveSharpen:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'adaptive_sharpen', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'adaptive_sharpen', kwargs, apply_type='iterative')
 
 
 class AdaptiveThreshold:
@@ -75,12 +60,7 @@ class AdaptiveThreshold:
     CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'adaptive_threshold', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'adaptive_threshold', kwargs, apply_type='iterative')
 
 
 class AutoGamma:
@@ -95,12 +75,7 @@ class AutoGamma:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'auto_gamma', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'auto_gamma', kwargs, apply_type='iterative')
 
 
 class AutoLevel:
@@ -115,12 +90,7 @@ class AutoLevel:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'auto_level', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'auto_level', kwargs, apply_type='iterative')
 
 
 class AutoOrient:
@@ -135,12 +105,7 @@ class AutoOrient:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'auto_orient', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'auto_orient', kwargs, apply_type='iterative')
 
 
 class AutoThreshold:
@@ -155,12 +120,7 @@ class AutoThreshold:
     CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'auto_threshold', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'auto_threshold', kwargs, apply_type='iterative')
 
 
 class BlueShift:
@@ -175,12 +135,7 @@ class BlueShift:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'blue_shift', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'blue_shift', kwargs, apply_type='iterative')
 
 
 class Blur:
@@ -195,12 +150,7 @@ class Blur:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'blur', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'blur', kwargs, apply_type='iterative')
 
 
 class BrightnessContrast:
@@ -215,12 +165,7 @@ class BrightnessContrast:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'brightness_contrast', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'brightness_contrast', kwargs, apply_type='iterative')
 
 
 class Canny:
@@ -235,12 +180,7 @@ class Canny:
     CATEGORY = "MagickWand/Feature"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'canny', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'canny', kwargs, apply_type='iterative')
 
 
 class Charcoal:
@@ -255,12 +195,7 @@ class Charcoal:
     CATEGORY = "MagickWand/Feature"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'charcoal', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'charcoal', kwargs, apply_type='iterative')
 
 
 class Chop:
@@ -275,12 +210,7 @@ class Chop:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'chop', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'chop', kwargs, apply_type='iterative')
 
 
 class Clahe:
@@ -295,12 +225,7 @@ class Clahe:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'clahe', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'clahe', kwargs, apply_type='iterative')
 
 
 class Clamp:
@@ -315,12 +240,7 @@ class Clamp:
     CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'clamp', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'clamp', kwargs, apply_type='iterative')
 
 
 class Coalesce:
@@ -335,12 +255,7 @@ class Coalesce:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'coalesce', kwargs, type='whole')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'coalesce', kwargs, apply_type='whole')
 
 
 class ColorDecisionList:
@@ -355,12 +270,7 @@ class ColorDecisionList:
     CATEGORY = "MagickWand/Color Matrix & Decision List"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'color_decision_list', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'color_decision_list', kwargs, apply_type='iterative')
 
 
 class ColorMatrix:
@@ -375,12 +285,7 @@ class ColorMatrix:
     CATEGORY = "MagickWand/Color Matrix & Decision List"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'color_matrix', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'color_matrix', kwargs, apply_type='iterative')
 
 
 class Combine:
@@ -395,12 +300,7 @@ class Combine:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'combine', kwargs, type='whole')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'combine', kwargs, apply_type='whole')
 
 
 class Concat:
@@ -415,12 +315,7 @@ class Concat:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'concat', kwargs, type='whole')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'concat', kwargs, apply_type='whole')
 
 
 class Contrast:
@@ -435,12 +330,7 @@ class Contrast:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'contrast', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'contrast', kwargs, apply_type='iterative')
 
 
 class ContrastStretch:
@@ -455,12 +345,7 @@ class ContrastStretch:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'contrast_stretch', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'contrast_stretch', kwargs, apply_type='iterative')
 
 
 class Crop:
@@ -475,12 +360,7 @@ class Crop:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'crop', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'crop', kwargs, apply_type='iterative')
 
 
 class CycleColorMap:
@@ -495,12 +375,7 @@ class CycleColorMap:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'cycle_color_map', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'cycle_color_map', kwargs, apply_type='iterative')
 
 
 class Decipher:
@@ -515,12 +390,7 @@ class Decipher:
     CATEGORY = "MagickWand/Cipher"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'decipher', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'decipher', kwargs, apply_type='iterative')
 
 
 class Despeckle:
@@ -535,12 +405,7 @@ class Despeckle:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'despeckle', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'despeckle', kwargs, apply_type='iterative')
 
 
 class Distort:
@@ -555,12 +420,7 @@ class Distort:
     CATEGORY = "MagickWand/Morphology"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'distort', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'distort', kwargs, apply_type='iterative')
 
 
 class Edge:
@@ -575,12 +435,7 @@ class Edge:
     CATEGORY = "MagickWand/Feature"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'edge', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'edge', kwargs, apply_type='iterative')
 
 
 class Emboss:
@@ -595,12 +450,7 @@ class Emboss:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'emboss', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'emboss', kwargs, apply_type='iterative')
 
 
 class Encipher:
@@ -615,12 +465,7 @@ class Encipher:
     CATEGORY = "MagickWand/Cipher"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'encipher', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'encipher', kwargs, apply_type='iterative')
 
 
 class Enhance:
@@ -635,12 +480,7 @@ class Enhance:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'enhance', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'enhance', kwargs, apply_type='iterative')
 
 
 class Equalize:
@@ -655,12 +495,7 @@ class Equalize:
     CATEGORY = "MagickWand/Statistic"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'equalize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'equalize', kwargs, apply_type='iterative')
 
 
 class Evaluate:
@@ -675,12 +510,7 @@ class Evaluate:
     CATEGORY = "MagickWand/Statistic"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'evaluate', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'evaluate', kwargs, apply_type='iterative')
 
 
 class Extent:
@@ -695,12 +525,7 @@ class Extent:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'extent', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'extent', kwargs, apply_type='iterative')
 
 
 class Flip:
@@ -715,12 +540,7 @@ class Flip:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'flip', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'flip', kwargs, apply_type='iterative')
 
 
 class Flop:
@@ -735,12 +555,7 @@ class Flop:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'flop', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'flop', kwargs, apply_type='iterative')
 
 
 class ForwardFourierTransform:
@@ -755,12 +570,7 @@ class ForwardFourierTransform:
     CATEGORY = "MagickWand/Fourier"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'forward_fourier_transform', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'forward_fourier_transform', kwargs, apply_type='iterative')
 
 
 class Function:
@@ -775,12 +585,7 @@ class Function:
     CATEGORY = "MagickWand/Statistic"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'function', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'function', kwargs, apply_type='iterative')
 
 
 class Gamma:
@@ -795,12 +600,7 @@ class Gamma:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'gamma', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'gamma', kwargs, apply_type='iterative')
 
 
 class GaussianBlur:
@@ -815,12 +615,7 @@ class GaussianBlur:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'gaussian_blur', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'gaussian_blur', kwargs, apply_type='iterative')
 
 
 class HoughLines:
@@ -835,12 +630,7 @@ class HoughLines:
     CATEGORY = "MagickWand/Feature"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'hough_lines', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'hough_lines', kwargs, apply_type='iterative')
 
 
 class Implode:
@@ -855,12 +645,7 @@ class Implode:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'implode', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'implode', kwargs, apply_type='iterative')
 
 
 class Kmeans:
@@ -875,12 +660,7 @@ class Kmeans:
     CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'kmeans', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'kmeans', kwargs, apply_type='iterative')
 
 
 class Kuwahara:
@@ -895,12 +675,7 @@ class Kuwahara:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'kuwahara', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'kuwahara', kwargs, apply_type='iterative')
 
 
 class Level:
@@ -915,12 +690,7 @@ class Level:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'level', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'level', kwargs, apply_type='iterative')
 
 
 class Levelize:
@@ -935,12 +705,7 @@ class Levelize:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'levelize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'levelize', kwargs, apply_type='iterative')
 
 
 class LinearStretch:
@@ -955,12 +720,7 @@ class LinearStretch:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'linear_stretch', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'linear_stretch', kwargs, apply_type='iterative')
 
 
 class LiquidRescale:
@@ -975,12 +735,7 @@ class LiquidRescale:
     CATEGORY = "MagickWand/Resize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'liquid_rescale', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'liquid_rescale', kwargs, apply_type='iterative')
 
 
 class LocalContrast:
@@ -995,12 +750,7 @@ class LocalContrast:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'local_contrast', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'local_contrast', kwargs, apply_type='iterative')
 
 
 class Magnify:
@@ -1015,12 +765,7 @@ class Magnify:
     CATEGORY = "MagickWand/Resize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'magnify', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'magnify', kwargs, apply_type='iterative')
 
 
 class MeanShift:
@@ -1035,12 +780,7 @@ class MeanShift:
     CATEGORY = "MagickWand/Feature"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'mean_shift', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'mean_shift', kwargs, apply_type='iterative')
 
 
 class MergeLayers:
@@ -1055,12 +795,7 @@ class MergeLayers:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'merge_layers', kwargs, type='whole')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'merge_layers', kwargs, apply_type='whole')
 
 
 class Mode:
@@ -1075,12 +810,7 @@ class Mode:
     CATEGORY = "MagickWand/Statistic"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'mode', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'mode', kwargs, apply_type='iterative')
 
 
 class Modulate:
@@ -1095,12 +825,7 @@ class Modulate:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'modulate', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'modulate', kwargs, apply_type='iterative')
 
 
 class Morphology:
@@ -1115,12 +840,7 @@ class Morphology:
     CATEGORY = "MagickWand/Morphology"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'morphology', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'morphology', kwargs, apply_type='iterative')
 
 
 class MotionBlur:
@@ -1135,12 +855,7 @@ class MotionBlur:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'motion_blur', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'motion_blur', kwargs, apply_type='iterative')
 
 
 class Negate:
@@ -1155,12 +870,7 @@ class Negate:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'negate', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'negate', kwargs, apply_type='iterative')
 
 
 class Noise:
@@ -1175,12 +885,7 @@ class Noise:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'noise', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'noise', kwargs, apply_type='iterative')
 
 
 class Normalize:
@@ -1195,12 +900,7 @@ class Normalize:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'normalize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'normalize', kwargs, apply_type='iterative')
 
 
 class OilPaint:
@@ -1215,12 +915,7 @@ class OilPaint:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'oil_paint', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'oil_paint', kwargs, apply_type='iterative')
 
 
 class OrderedDither:
@@ -1235,12 +930,7 @@ class OrderedDither:
     CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'ordered_dither', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'ordered_dither', kwargs, apply_type='iterative')
 
 
 class Polynomial:
@@ -1255,12 +945,7 @@ class Polynomial:
     CATEGORY = "MagickWand/Statistic"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'polynomial', kwargs, type='whole')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'polynomial', kwargs, apply_type='whole')
 
 
 class Posterize:
@@ -1275,12 +960,7 @@ class Posterize:
     CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'posterize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'posterize', kwargs, apply_type='iterative')
 
 
 class Quantize:
@@ -1295,12 +975,7 @@ class Quantize:
     CATEGORY = "MagickWand/Quantize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'quantize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'quantize', kwargs, apply_type='iterative')
 
 
 class RandomThreshold:
@@ -1315,12 +990,7 @@ class RandomThreshold:
     CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'random_threshold', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'random_threshold', kwargs, apply_type='iterative')
 
 
 class RangeThreshold:
@@ -1335,12 +1005,7 @@ class RangeThreshold:
     CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'range_threshold', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'range_threshold', kwargs, apply_type='iterative')
 
 
 class Resample:
@@ -1355,12 +1020,7 @@ class Resample:
     CATEGORY = "MagickWand/Resize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'resample', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'resample', kwargs, apply_type='iterative')
 
 
 class Resize:
@@ -1375,12 +1035,7 @@ class Resize:
     CATEGORY = "MagickWand/Resize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'resize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'resize', kwargs, apply_type='iterative')
 
 
 class Roll:
@@ -1395,12 +1050,7 @@ class Roll:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'roll', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'roll', kwargs, apply_type='iterative')
 
 
 class RotationalBlur:
@@ -1415,12 +1065,7 @@ class RotationalBlur:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'rotational_blur', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'rotational_blur', kwargs, apply_type='iterative')
 
 
 class Sample:
@@ -1435,12 +1080,7 @@ class Sample:
     CATEGORY = "MagickWand/Resize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'sample', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'sample', kwargs, apply_type='iterative')
 
 
 class Scale:
@@ -1455,12 +1095,7 @@ class Scale:
     CATEGORY = "MagickWand/Resize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'scale', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'scale', kwargs, apply_type='iterative')
 
 
 class SelectiveBlur:
@@ -1475,12 +1110,7 @@ class SelectiveBlur:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'selective_blur', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'selective_blur', kwargs, apply_type='iterative')
 
 
 class SepiaTone:
@@ -1495,12 +1125,7 @@ class SepiaTone:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'sepia_tone', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'sepia_tone', kwargs, apply_type='iterative')
 
 
 class Shade:
@@ -1515,12 +1140,7 @@ class Shade:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'shade', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'shade', kwargs, apply_type='iterative')
 
 
 class Shadow:
@@ -1535,12 +1155,7 @@ class Shadow:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'shadow', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'shadow', kwargs, apply_type='iterative')
 
 
 class Sharpen:
@@ -1555,12 +1170,7 @@ class Sharpen:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'sharpen', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'sharpen', kwargs, apply_type='iterative')
 
 
 class Shave:
@@ -1575,12 +1185,7 @@ class Shave:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'shave', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'shave', kwargs, apply_type='iterative')
 
 
 class SigmoidalContrast:
@@ -1595,12 +1200,7 @@ class SigmoidalContrast:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'sigmoidal_contrast', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'sigmoidal_contrast', kwargs, apply_type='iterative')
 
 
 class Sketch:
@@ -1615,12 +1215,7 @@ class Sketch:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'sketch', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'sketch', kwargs, apply_type='iterative')
 
 
 class Smush:
@@ -1635,12 +1230,7 @@ class Smush:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'smush', kwargs, type='whole')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'smush', kwargs, apply_type='whole')
 
 
 class Solarize:
@@ -1655,12 +1245,7 @@ class Solarize:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'solarize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'solarize', kwargs, apply_type='iterative')
 
 
 class Splice:
@@ -1675,12 +1260,7 @@ class Splice:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'splice', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'splice', kwargs, apply_type='iterative')
 
 
 class Spread:
@@ -1695,12 +1275,7 @@ class Spread:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'spread', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'spread', kwargs, apply_type='iterative')
 
 
 class Statistic:
@@ -1715,12 +1290,7 @@ class Statistic:
     CATEGORY = "MagickWand/Statistic"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'statistic', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'statistic', kwargs, apply_type='iterative')
 
 
 class Swirl:
@@ -1735,12 +1305,7 @@ class Swirl:
     CATEGORY = "MagickWand/Morphology"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'swirl', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'swirl', kwargs, apply_type='iterative')
 
 
 class Threshold:
@@ -1755,12 +1320,7 @@ class Threshold:
     CATEGORY = "MagickWand/Thresold"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'threshold', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'threshold', kwargs, apply_type='iterative')
 
 
 class Thumbnail:
@@ -1775,12 +1335,7 @@ class Thumbnail:
     CATEGORY = "MagickWand/Resize"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'thumbnail', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'thumbnail', kwargs, apply_type='iterative')
 
 
 class Transform:
@@ -1795,12 +1350,7 @@ class Transform:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'transform', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'transform', kwargs, apply_type='iterative')
 
 
 class TransformColorspace:
@@ -1815,12 +1365,7 @@ class TransformColorspace:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'transform_colorspace', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'transform_colorspace', kwargs, apply_type='iterative')
 
 
 class Transparentize:
@@ -1835,12 +1380,7 @@ class Transparentize:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'transparentize', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'transparentize', kwargs, apply_type='iterative')
 
 
 class Transpose:
@@ -1855,12 +1395,7 @@ class Transpose:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'transpose', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'transpose', kwargs, apply_type='iterative')
 
 
 class Transverse:
@@ -1875,12 +1410,7 @@ class Transverse:
     CATEGORY = "MagickWand/Transform"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'transverse', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'transverse', kwargs, apply_type='iterative')
 
 
 class UnsharpMask:
@@ -1895,12 +1425,7 @@ class UnsharpMask:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'unsharp_mask', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'unsharp_mask', kwargs, apply_type='iterative')
 
 
 class Vignette:
@@ -1915,12 +1440,7 @@ class Vignette:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'vignette', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'vignette', kwargs, apply_type='iterative')
 
 
 class Wave:
@@ -1935,12 +1455,7 @@ class Wave:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'wave', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'wave', kwargs, apply_type='iterative')
 
 
 class WaveletDenoise:
@@ -1955,12 +1470,7 @@ class WaveletDenoise:
     CATEGORY = "MagickWand/Effect"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'wavelet_denoise', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'wavelet_denoise', kwargs, apply_type='iterative')
 
 
 class WhiteBalance:
@@ -1975,12 +1485,7 @@ class WhiteBalance:
     CATEGORY = "MagickWand/Enhance"
 
     def execute(self, image, **kwargs):
-        wand_img = to_wand_img(image)
-        kwargs = preprocess_kwargs(**kwargs)
-        apply_to_wand_seq(wand_img, 'white_balance', kwargs, type='iterative')
-        out = to_comfy_img(wand_img)
-        wand_img.close()
-        return (out, )
+        return safe_wand_execute(image, 'white_balance', kwargs, apply_type='iterative')
 
 NODE_CLASS_MAPPINGS = {
     "ImageMagick Adaptive Blur": AdaptiveBlur,
